@@ -9,7 +9,7 @@ import '../styles/Main.css' // will load compiled css from ./App.scss
 
 function Main (props) {
   return (
-    <div>
+    <div className='main-component-wrapper'>
       <img src={bill} alt='bill murray' />
       <div className='likes'>
         <Button bsStyle='primary' onClick={props.handleLikeClick}>Like</Button>
