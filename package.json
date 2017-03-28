@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "enzyme": "^2.8.0",
     "node-sass": "^4.5.1",
     "npm-run-all": "^4.0.2",
+    "react-addons-test-utils": "^15.4.2",
     "react-scripts": "0.9.5"
   },
   "dependencies": {
@@ -21,5 +23,16 @@
     "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "standard": {
+    "globals": [
+      "beforeEach",
+      "describe",
+      "expect",
+      "it",
+      "jest",
+      "mount",
+      "shallow"
+    ]
   }
 }

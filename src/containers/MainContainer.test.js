@@ -1,10 +1,18 @@
-/* globals it */
-
 import React from 'react'
-import ReactDOM from 'react-dom'
-import Main from '../components/Main'
+import { shallow } from 'enzyme'
 
-it('renders without crashing', () => {
-  const div = document.createElement('div')
-  ReactDOM.render(<Main />, div)
+import MainContainer from './MainContainer'
+
+describe('MainContainer', () => {
+  it('renders without crashing', () => {
+    expect(shallow(<MainContainer />).length).toEqual(1)
+  })
+
+  it('handleLikeClick increases state.like by one', () => {
+    const wrapper = shallow(<MainContainer />)
+    const startLikes = wrapper.state('likes')
+    wrapper.instance().handleLikeClick()
+    const endLikes = wrapper.state('likes')
+    expect(parseInt(startLikes) === parseInt(endLikes))
+  })
 })

@@ -13,7 +13,7 @@ function Main (props) {
       <img src={bill} alt='bill murray' />
       <div className='likes'>
         <Button bsStyle='primary' onClick={props.handleLikeClick}>Like</Button>
-        {props.likes}
+        <p className='likes-counter'>{props.likes}</p>
       </div>
     </div>
   )
