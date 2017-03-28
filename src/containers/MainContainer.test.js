@@ -2,7 +2,7 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Main from '../componetns/Main'
+import Main from '../components/Main'
 
 it('renders without crashing', () => {
   const div = document.createElement('div')
