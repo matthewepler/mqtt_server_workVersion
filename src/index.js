@@ -1,8 +1,4 @@
-import React from 'react'
 import ReactDOM from 'react-dom'
-import Main from './containers/MainContainer'
+import routes from './routes/routes'
 
-ReactDOM.render(
-  <Main />,
-  document.getElementById('root')
-)
+ReactDOM.render(routes, document.getElementById('root'))

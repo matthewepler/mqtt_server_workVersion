@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 
-// components
+// UI components
 import Main from '../components/Main'
 
 // styles
 import '../styles/index.css'
 
-class App extends Component {
+class MainContainer extends Component {
   // lifecycle methods
   constructor (props) {
     super(props)
@@ -31,4 +31,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default MainContainer
