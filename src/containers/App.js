@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
 // static files
-import logo from './logo.svg'
+import logo from '../../public/img/logo.svg'
 
 // styles
-import './App.css' // will load compiled css from ./App.scss
+import '../styles/App.css' // will load compiled css from ./App.scss
 
 class App extends Component {
   render () {
