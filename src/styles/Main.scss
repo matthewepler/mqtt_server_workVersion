@@ -6,10 +6,17 @@
   width: 400px;
 
   .likes {
+    display: flex;
     margin-top: 25px;
+    justify-content: center;
+    align-items: center;
 
     Button {
       margin-right: 25px;
+    }
+
+    p {
+      margin-top: 10px;
     }
   
   }
