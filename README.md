@@ -2,10 +2,10 @@
 A blank React project for creating web-based projects.
 
 **Tools Used:**
-* [create-react-app](https://github.com/facebookincubator/create-react-app)
-* [React Bootstrap](https://react-bootstrap.github.io/)
+* [create-react-app](https://github.com/facebookincubator/create-react-app) - see documentation [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-a-css-preprocessor-sass-less-etc) for more detail.
 * [Jest](https://facebook.github.io/jest/docs/tutorial-react.html) for testing (more info coming soon) with the [Enzyme](http://airbnb.io/enzyme/) utility.
-* SASS
+* [SASS/SCSS](http://sass-lang.com/)
+* [React Bootstrap](https://react-bootstrap.github.io/) only when necessary
 
 # How to Use This Repo
 Clone or download the source to your computer. `cd` into the directory and install dependencies using `yarn install` at the project root.
@@ -62,14 +62,9 @@ Try [this](https://atom.io/packages/language-babel) (TO-DO: verify if this is ne
 **Vim**  
 Install [this](https://github.com/pangloss/vim-javascript) and then [this](https://github.com/mxw/vim-jsx). Use the recommended setting `let g:jsx_ext_required=0` in your `.vimrc` file
 
-# Notes
-TO-DO
-* hot reloading
-
+# Notes/Issues
 [TO-DO: License should be stated in `package.json`, but is left blank for now]
 
 Based on code by Tyler McGinnis at reacttraining.com 
 <tylermcginnis33@gmail.com> (http://tylermcginnis.com)
-
-https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-a-css-preprocessor-sass-less-etc
 
