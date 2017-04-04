@@ -1,6 +1,12 @@
+html {
+  // 1 rem = 10pt;
+  font-size: 10pt;
+}
+
 body {
   background: DarkTurquoise;
   font-family: sans-serif;
+  font-size: 1.2rem;
   margin: 0;
   padding: 0;
 }

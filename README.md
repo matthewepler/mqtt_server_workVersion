@@ -26,7 +26,7 @@ When possible, we use [Yarn](https://yarnpkg.com/en/) instead of npm.
 We separate Presentational and Container components. For an explanation, read [this](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.5dz171v91) or watch [this](https://online.reacttraining.com/courses/50507/lectures/760395). 
 
 **styling**
-For styling, we cannot use inline styling because you cannot use it to override styles of Bootstrap elements. For this reason, we are using the following tools instead:
+For styling, we cannot use inline styling because you cannot use it to override styles of Bootstrap elements. Also, you cannot implement media queries directly with inline styling. For this reasons, we are using the following tools instead:
 * SASS
 * Autoprefixer
 * [methodology TBD as necessary, e.g. BEM]
@@ -64,6 +64,9 @@ Install [this](https://github.com/pangloss/vim-javascript) and then [this](https
 
 # Notes/Issues
 [TO-DO: License should be stated in `package.json`, but is left blank for now]
+
+Images: [TO-DO, verify this is a best practice]
+Image resizing for device size and resolution costs a lot of CPU and battery power. Try to use [HTML responsive images](https://www.smashingmagazine.com/2014/05/responsive-images-done-right-guide-picture-srcset/).
 
 Based on code by Tyler McGinnis at reacttraining.com 
 <tylermcginnis33@gmail.com> (http://tylermcginnis.com)
