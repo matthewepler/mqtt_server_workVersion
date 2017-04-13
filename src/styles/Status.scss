@@ -1,0 +1,14 @@
+.status-component {
+
+  .connected {
+    background: green;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+  }
+
+  .disconnected {
+    background: red;
+  }
+}
+
