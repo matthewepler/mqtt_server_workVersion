@@ -7,16 +7,6 @@
     border-collapse: collapse;
     width: 225px;
 
-    thead {
-      .connected {
-        background: green;
-      }
-
-      .disconnected {
-        background: red;
-      }
-    }
-
     th, td {
       border: 1px solid black;
       padding: 10px;
@@ -25,6 +15,21 @@
     th {
       color: white;
     }
+
+    tr:hover {
+      color: blue;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
   }
 }
 
+.connected {
+  background: green;
+}
+
+.disconnected {
+  background: red;
+}
