@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Client from 'ibmiotf'
 
 // UI components
 import Main from '../components/Main'
@@ -7,24 +8,43 @@ import Main from '../components/Main'
 import '../styles/index.css'
 
 class MainContainer extends Component {
-  // lifecycle methods
   constructor (props) {
     super(props)
-    this.state = {
-      likes: 0
+    this.state = {}
+
+    this.appClientConfig = {
+      'org': 'ykq7wp',
+      'id': 'server-status-dashboard',
+      'domain': 'internetofthings.ibmcloud.com',
+      'auth-key': 'a-ykq7wp-cnuhjhye5z',
+      'auth-token': '&K_yj9KS!@zt4@rkIM',
+      'type': 'shared'
     }
+
+    this.client = new Client.IotfApplication(this.appClientConfig)
   }
 
-  // custom methods
-  handleLikeClick () {
-    this.setState({ likes: this.state.likes + 1 })
+  componentDidMount () {
+    this.client.connect()
+
+    this.client.on('connect', () => {
+      console.log('connected to broker')
+      this.client.subscribeToDeviceEvents('hcs_tag')
+    })
+
+    this.client.on('deviceEvent', (deviceType, deviceId, eventType, format, payload) => {
+      console.log(`${deviceId}: ${payload}`)
+
+      // check if deviceId is already known
+      // if yes, update its timestamp
+      // if no, add it to the list and add a timestamp
+    })
   }
 
   render () {
     return (
       <div className='main-container'>
-        <h1>Well hello there.</h1>
-        <Main likes={this.state.likes} handleLikeClick={() => this.handleLikeClick()} />
+        <Main />
       </div>
     )
   }
