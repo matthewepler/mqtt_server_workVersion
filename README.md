@@ -1,4 +1,11 @@
 # IBM MQTT Status Dashboard
+
+##Summary
+A simple tool for seeing if the broker is publishing data and what tags are online.
+
+This displays the connectivity status of a client to the MQTT broker. It displays all tags that are connected and sending environmental data (which they all do every 1 sec). 
+
+##Install/Run
 Clone or download the source to your computer. `cd` into the directory and install dependencies using `yarn install` at the project root.
 
 To start the app, run `yarn run start`
