@@ -6,12 +6,36 @@ export const getCurrTimeString = () => {
 }
 
 export const names = {
-  '669c15c8': 'Samantha',
-  '669c4d7e': 'David',
-  '669c4f16': 'Jose',
-  '669c49ce': 'Carlota',
-  '669c16bd': 'Mohammad',
-  '669c50f5': 'Phillipe',
-  '669c5636': 'Rodrigo',
-  '669c4f3c': 'Thomas'
+  '669c15c8': {
+    name: 'Samantha',
+    site: 'HCS'
+  },
+  '669c4d7e': {
+    name: 'David',
+    site: 'HCS'
+  },
+  '669c4f16': {
+    name: 'Jose',
+    site: 'HCS'
+  },
+  '669c49ce': {
+    name: 'Carolota',
+    site: 'HCS'
+  },
+  '669c16bd': {
+    name: 'Mohammad',
+    site: 'HCS'
+  },
+  '669c50f5': {
+    name: 'Phillipe',
+    site: 'HCS'
+  },
+  '669c5636': {
+    name: 'Rodrigo',
+    site: 'HCS'
+  },
+  '669c4f3c': {
+    name: 'Thomas',
+    site: 'HCS'
+  }
 }
