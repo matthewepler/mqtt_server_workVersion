@@ -93,7 +93,8 @@ class MainContainer extends Component {
     const activeTags = this.state.activeTags
     activeTags.push({
       id: id,
-      name: names[id]
+      name: names[id].name,
+      site: names[id].site
     })
     this.setState({ activeTags })
 
@@ -165,7 +166,8 @@ class MainContainer extends Component {
           key={index}
         >
           <td id={`${tag.id}-id`} className='tag-id'>{tag.id}</td>
-          <td id={`${tag.id}-name`} className='tag-nae'>{tag.name}</td>
+          <td id={`${tag.id}-name`} className='tag-name'>{tag.name}</td>
+          <td id={`${tag.id}-site`} className='tag-site'>{tag.site}</td>
           <td id={`${tag.id}-last-heard`} className='tag-last-heard' />
           <td id={`${tag.id}-bad-bend`} className='tag-bad-bend' />
 
@@ -193,7 +195,7 @@ class MainContainer extends Component {
               id='meta-header'
               className={this.state.brokerConnection ? 'connected-bg' : 'disconnected-bg'}
             >
-              <th colSpan='3'>Metadata</th>
+              <th colSpan='4'>Metadata</th>
               <th colSpan='1'>event</th>
               <th colSpan='4'>envHi</th>
               <th colSpan='2'>envLo</th>
@@ -204,6 +206,7 @@ class MainContainer extends Component {
             >
               <th id='header-id'>id</th>
               <th id='header-last-heard'>name</th>
+              <th id='header-site'>site</th>
               <th id='header-last-heard'>last heard</th>
               <th id='header-bad-bend'>bad_bend</th>
 
