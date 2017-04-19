@@ -17,8 +17,7 @@ class MainContainer extends Component {
     super(props)
     this.state = {
       activeTags: [],
-      brokerConnection: false,
-      debug: false
+      brokerConnection: false
     }
 
     this.appClientConfig = {
@@ -31,6 +30,15 @@ class MainContainer extends Component {
     }
 
     this.client = new Client.IotfApplication(this.appClientConfig)
+
+    // a collection of objects that contain deviceId, and lastHeard timestamp.
+    // used to determine if the tag is still 'active'.
+    // seperated from state because of the frequency of updates.
+    this.heartbeats = []
+    this.heartbeatTimer = null // placeholder for interval timer object
+    this.heartbeatThreshold = 2000 // check every X ms for tag status
+
+    this.debug = false
   }
 
   componentDidMount () {
@@ -48,22 +56,26 @@ class MainContainer extends Component {
       this.client.subscribeToDeviceEvents('hcs_tag', '+', 'event', 'json')
       this.client.subscribeToDeviceEvents('hcs_tag', '+', 'orient', 'json')
       this.setState({ brokerConnection: true })
+      this.heartbeatTimer = setInterval(() => {
+        this.checkHeartbeat()
+      }, this.heartbeatThreshold)
     })
 
     this.client.on('disconnect', () => {
       console.log('disconnected from broker')
       this.setState({ brokerConnection: false })
+      clearInterval(this.heartbeatTimer)
       setTimeout(this.initConnection(), 3000)
     })
 
     this.client.on('deviceEvent', (deviceType, deviceId, eventType, format, payload) => {
-      if (this.state.debug) console.log(`${payload}`)
+      if (this.debug) console.log(`${payload}`)
 
       // payload is an array of integers and needs coercing
       const data = JSON.parse(String(payload))
 
       // check to see if this tag is already in the list of active tags
-      const tagIndex = this.state.activeTags.findIndex((obj) => {
+      const tagIndex = this.heartbeats.findIndex((obj) => {
         return obj.id === deviceId
       })
 
@@ -81,21 +93,26 @@ class MainContainer extends Component {
     const activeTags = this.state.activeTags
     activeTags.push({
       id: id,
-      name: names[id],
-      lastHeard: getCurrTimeString()
+      name: names[id]
     })
     this.setState({ activeTags })
+
+    this.heartbeats.push({
+      id,
+      lastHeard: getCurrTimeString()
+    })
   }
 
   updateTag (deviceId, eventType, data, tagIndex) {
     // updates are done with direct DOM manipulation for efficiency
     // also, calling this.setState() does not guarantee when the change will
-    // take place.
+    // take place immediately since state updates result in a pending state.
 
     // data payloads eventType is either 'event' (something bad) or r
     // regular updates that bear the name of the data type, i.e. 'orient'
 
     // update the 'last heard' timestamp so we know if it's active
+    this.heartbeats[tagIndex].lastHeard = Date.now()
     document.getElementById(`${deviceId}-last-heard`).innerHTML = getCurrTimeString()
 
     if (eventType === 'event') {
@@ -119,6 +136,27 @@ class MainContainer extends Component {
     // this.setState({ activeTags })
   }
 
+  checkHeartbeat () {
+    // for each item in the heartbeats array
+    this.heartbeats.forEach((obj) => {
+      // compare the lastHeard value to the current time
+      const diff = Date.now() - new Date(obj.lastHeard).getTime()
+      // if the diff is > our threshold (set in constructor)
+      console.log(diff, this.heartbeatThreshold)
+      if (diff > this.heartbeatThreshold) {
+        // remove it from this.state.activeTags
+        const temp = this.state.activeTags
+        const index = temp.findIndex((ATobj) => {
+          return ATobj.id === obj.id
+        })
+        temp.splice(index, 1)
+
+         // remove it from this.heartbeats
+        this.heartbeats.splice(index, 1)
+      }
+    })
+  }
+
   render () {
     const allTags = this.state.activeTags.map((tag, index) => {
       return (
@@ -129,7 +167,7 @@ class MainContainer extends Component {
         >
           <td id={`${tag.id}-id`} className='tag-id'>{tag.id}</td>
           <td id={`${tag.id}-name`} className='tag-nae'>{tag.name}</td>
-          <td id={`${tag.id}-last-heard`} className='tag-last-heard'>{tag.lastHeard}</td>
+          <td id={`${tag.id}-last-heard`} className='tag-last-heard' />
           <td id={`${tag.id}-bad-bend`} className='tag-bad-bend' />
 
           <td id={`${tag.id}-mic`} className='tag-mic' />
