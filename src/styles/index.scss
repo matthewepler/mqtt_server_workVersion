@@ -10,13 +10,11 @@
     th, td {
       border: 1px solid black;
       padding: 10px;
+      text-align: center;
     }
 
     #meta-header {
       color: white;
-      th {
-        text-align: center;
-      }
     }
 
     #header {
@@ -34,6 +32,7 @@
   }
 }
 
+// Status Colors
 .status-good {
   color: green;
 }
@@ -53,5 +52,5 @@
 // Column widths
 #header { table-layout: fixed }
 #header-id { width: 100px }
-#header-last-heard { width: 125px }
+#header-last-heard { width: 300px }
 #header-bad-bend { width: 100px }

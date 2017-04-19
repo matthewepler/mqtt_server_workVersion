@@ -142,7 +142,6 @@ class MainContainer extends Component {
       // compare the lastHeard value to the current time
       const diff = Date.now() - new Date(obj.lastHeard).getTime()
       // if the diff is > our threshold (set in constructor)
-      console.log(diff, this.heartbeatThreshold)
       if (diff > this.heartbeatThreshold) {
         // remove it from this.state.activeTags
         const temp = this.state.activeTags
