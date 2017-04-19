@@ -5,31 +5,53 @@
 
   table {
     border-collapse: collapse;
-    width: 225px;
+    table-layout: fixed;
 
     th, td {
       border: 1px solid black;
       padding: 10px;
     }
 
-    th {
+    #meta-header {
+      color: white;
+      th {
+        text-align: center;
+      }
+    }
+
+    #header {
+      background: #252525;
       color: white;
     }
 
     tr:hover {
-      color: blue;
+      border: 3px solid black;
     }
 
     tr:nth-child(even) {
-      background-color: #f2f2f2;
+      background: #f2f2f2;
     }
   }
 }
 
-.connected {
+.status-good {
+  color: green;
+}
+
+.status-error {
+  color: red;
+}
+
+.connected-bg {
   background: green;
 }
 
-.disconnected {
+.disconnected-bg {
   background: red;
 }
+
+// Column widths
+#header { table-layout: fixed }
+#header-id { width: 100px }
+#header-last-heard { width: 125px }
+#header-bad-bend { width: 100px }
