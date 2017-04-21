@@ -150,7 +150,9 @@ class MainContainer extends Component {
           return ATobj.id === obj.id
         })
         temp.splice(index, 1)
-
+        this.setState({
+          activeTags: temp
+        })
          // remove it from this.heartbeats
         this.heartbeats.splice(index, 1)
       }
