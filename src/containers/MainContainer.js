@@ -24,8 +24,8 @@ class MainContainer extends Component {
       'org': 'ykq7wp',
       'id': 'server-status-dashboard',
       'domain': 'internetofthings.ibmcloud.com',
-      'auth-key': 'a-ykq7wp-cnuhjhye5z',
-      'auth-token': '&K_yj9KS!@zt4@rkIM',
+      'auth-key': process.env.REACT_APP_AUTHKEY,
+      'auth-token': process.env.REACT_APP_AUTHTOKEN,
       'type': 'shared'
     }
 
@@ -92,8 +92,8 @@ class MainContainer extends Component {
     const activeTags = this.state.activeTags
     activeTags.push({
       id: id,
-      name: names[id].name,
-      site: names[id].site
+      name: names[id] ? names[id].name : '(stranger)',
+      site: names[id] ? names[id].site : '(danger)'
     })
     this.setState({ activeTags })
 
