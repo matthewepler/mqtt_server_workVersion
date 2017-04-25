@@ -24,8 +24,8 @@ class MainContainer extends Component {
       'org': 'ykq7wp',
       'id': 'server-status-dashboard',
       'domain': 'internetofthings.ibmcloud.com',
-      'auth-key': process.env.AUTHKEY,
-      'auth-token': process.env.AUTHTOKEN,
+      'auth-key': 'a-ykq7wp-cnuhjhye5z',
+      'auth-token': '&K_yj9KS!@zt4@rkIM',
       'type': 'shared'
     }
 
