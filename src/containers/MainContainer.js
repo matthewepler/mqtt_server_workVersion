@@ -5,9 +5,10 @@ TO-DO
 
 import React, { Component } from 'react'
 import Client from 'ibmiotf'
+import sheetsu from 'sheetsu-node'
 
 // helpers
-import { getCurrTimeString, names } from './helpers/utils'
+import { getCurrTimeString } from './helpers/utils'
 
 // styles
 import '../styles/index.css'
@@ -17,8 +18,11 @@ class MainContainer extends Component {
     super(props)
     this.state = {
       activeTags: [],
-      brokerConnection: false
+      brokerConnection: false,
+      dbConnected: false
     }
+
+    this.workerData = []
 
     this.appClientConfig = {
       'org': 'ykq7wp',
@@ -43,8 +47,16 @@ class MainContainer extends Component {
     this.debug = false
   }
 
+  componentWillMount () {
+    this.connectToDB()
+  }
+
   componentDidMount () {
     this.initConnection()
+
+    setTimeout(() => {
+      this.killAllAndRevive()
+    }, 4000)
   }
 
   initConnection () {
@@ -88,14 +100,36 @@ class MainContainer extends Component {
     })
   }
 
+  connectToDB () {
+    var config = {
+      address: 'https://sheetsu.com/apis/v1.0/2731f699ff68'
+    }
+
+    this.dbClient = sheetsu(config)
+
+    this.dbClient.read().then((data) => {
+      this.workerData = JSON.parse(data)
+      this.setState({ dbConnected: true })
+    }, (err) => {
+      console.log('Error with Sheetsu connection.', err)
+    })
+  }
+
   addTag (id) {
     const activeTags = this.state.activeTags
     activeTags.push({
-      id: id,
-      name: names[id] ? names[id].name : '(stranger)',
-      site: names[id] ? names[id].site : '(danger)'
+      id,
+      name: 'unknown',
+      site: 'unknown'
     })
     this.setState({ activeTags })
+    // const activeTags = this.state.activeTags
+    // const thisWorker = this.workerData.find((obj) => {
+    //   return obj.id === id
+    // })
+
+    // activeTags.push(thisWorker)
+    // this.setState({ activeTags })
 
     this.heartbeats.push({
       id,
@@ -131,9 +165,20 @@ class MainContainer extends Component {
       }
     }
 
-    // const activeTags = this.state.activeTags
-    // activeTags[tagIndex] = udpatedTag
-    // this.setState({ activeTags })
+    // check for name and site in DB if it's not already known
+    const activeTags = this.state.activeTags
+    if (activeTags[tagIndex].name === 'unknown' && this.state.dbConnected) {
+      const worker = this.workerData.find((worker) => {
+        return worker.id === deviceId
+      })
+      if (worker) {
+        activeTags[tagIndex].name = worker.name
+        activeTags[tagIndex].site = worker.site
+        this.setState({ activeTags })
+      } else {
+        console.log(`Could not find matching data for tag# ${deviceId}`)
+      }
+    }
   }
 
   checkHeartbeat () {
@@ -204,8 +249,12 @@ class MainContainer extends Component {
 
     return (
       <div className='main-container'>
-        <div className='nav-bar'>
-          <img src='img/light_hexagon.svg' alt='refresh' />
+        <div className='nav-bar' >
+          <img
+            src='img/light_hexagon.svg'
+            alt='refresh'
+            onClick={() => { this.killAllAndRevive() }}
+          />
         </div>
         <table className='device-list'>
           <thead>

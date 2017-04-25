@@ -1,6 +1,8 @@
 @import 'base';
 
-$lightgrey:   #D3D3D3;
+$lightgrey: #D3D3D3;
+$darkgrey: #4B4B4B;
+$xtra-darkgrey: #252525;
 $connected: #00FF7F;
 $error: #FF6347;
 
@@ -8,6 +10,7 @@ $error: #FF6347;
   padding: 20px;
 
   .nav-bar img {
+    cursor: pointer;
     margin-bottom: 1.5rem;
     width: 75px;
   }
@@ -18,15 +21,15 @@ $error: #FF6347;
     table-layout: fixed;
 
     th, td {
-      border-right: 1px solid #4B4B4B;
+      border-right: 1px solid $darkgrey;
       font-weight: 100;
       padding: 10px;
       text-align: center;
     }
 
     td {
-      border-right: 1px solid #313131;
       font-weight: 100;
+      vertical-align: middle;
     }
 
     td:nth-child(4),
@@ -37,7 +40,6 @@ $error: #FF6347;
     }
 
     #meta-header {
-      background: white;
       color: black;
 
       th {
@@ -46,7 +48,7 @@ $error: #FF6347;
     }
 
     #header {
-      background: #252525;
+      background: $xtra-darkgrey;
       border-bottom: 1px solid $lightgrey;
       color: white;
 
@@ -59,17 +61,14 @@ $error: #FF6347;
     }
 
     tbody {
-      
-      .tag-row {
 
-        tr:hover {
-          border: 3px solid black;
-        }
-
-        tr:nth-child(even) {
-          background: darkgrey;
-        }
+      tr:hover {
+        background: $xtra-darkgrey;
       }
+
+      // tr:nth-child(even) {
+      //   background: $xtra-darkgrey;
+      // }
     }
 
     
