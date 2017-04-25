@@ -7,7 +7,7 @@
     "node-sass": "^4.5.1",
     "npm-run-all": "^4.0.2",
     "react-addons-test-utils": "^15.4.2",
-    "react-scripts": "0.9.5"
+    "react-scripts": "^0.9.5"
   },
   "dependencies": {
     "classnames": "^2.2.5",
