@@ -9,7 +9,7 @@
 * SASS/SCSS
 src/**/*.css
 
-# production
+.env
 
 # misc
 .DS_Store
