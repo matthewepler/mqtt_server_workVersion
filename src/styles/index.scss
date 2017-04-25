@@ -1,52 +1,100 @@
 @import 'base';
 
+$lightgrey:   #D3D3D3;
+$connected: #00FF7F;
+$error: #FF6347;
+
 .main-container {
   padding: 20px;
 
+  .nav-bar img {
+    margin-bottom: 1.5rem;
+    width: 75px;
+  }
+
   table {
     border-collapse: collapse;
+    border-bottom: 1px solid white;
     table-layout: fixed;
 
     th, td {
-      border: 1px solid black;
+      border-right: 1px solid #4B4B4B;
+      font-weight: 100;
       padding: 10px;
       text-align: center;
     }
 
+    td {
+      border-right: 1px solid #313131;
+      font-weight: 100;
+    }
+
+    td:nth-child(4),
+    td:nth-child(5),
+    td:nth-child(9),
+    td:nth-child(11) {
+      border-right: 1px solid $lightgrey;
+    }
+
     #meta-header {
-      color: white;
+      background: white;
+      color: black;
+
+      th {
+        border-right: 1px solid black;
+      }
     }
 
     #header {
       background: #252525;
+      border-bottom: 1px solid $lightgrey;
       color: white;
+
+      th:nth-child(4),
+      th:nth-child(5),
+      th:nth-child(9),
+      th:nth-child(11) {
+        border-right: 1px solid $lightgrey;
+      }
     }
 
-    tr:hover {
-      border: 3px solid black;
+    tbody {
+      
+      .tag-row {
+
+        tr:hover {
+          border: 3px solid black;
+        }
+
+        tr:nth-child(even) {
+          background: darkgrey;
+        }
+      }
     }
 
-    tr:nth-child(even) {
-      background: #f2f2f2;
-    }
+    
   }
 }
 
 // Status Colors
 .status-good {
-  color: green;
+  color: $connected;
 }
 
 .status-error {
-  color: red;
+  color: $error;
+}
+
+.status-inactive {
+  color: $lightgrey;
 }
 
 .connected-bg {
-  background: green;
+  background: white;
 }
 
 .disconnected-bg {
-  background: red;
+  background: $error;
 }
 
 // Column widths

@@ -35,8 +35,10 @@ class MainContainer extends Component {
     // used to determine if the tag is still 'active'.
     // seperated from state because of the frequency of updates.
     this.heartbeats = []
-    this.heartbeatTimer = null // placeholder for interval timer object
-    this.heartbeatThreshold = 3000 // check every X ms for tag status
+    this.heartbeatInterval = null // placeholder for interval timer object
+    this.heartbeatTimer = 1000
+    this.activeThreshold = 3000
+    this.heartbeatThreshold = 60000 // check every X ms for tag status
 
     this.debug = false
   }
@@ -56,16 +58,13 @@ class MainContainer extends Component {
       this.client.subscribeToDeviceEvents('hcs_tag', '+', 'event', 'json')
       this.client.subscribeToDeviceEvents('hcs_tag', '+', 'orient', 'json')
       this.setState({ brokerConnection: true })
-      this.heartbeatTimer = setInterval(() => {
+      this.heartbeatInterval = setInterval(() => {
         this.checkHeartbeat()
-      }, this.heartbeatThreshold)
+      }, this.heartbeatTimer)
     })
 
     this.client.on('disconnect', () => {
-      console.log('disconnected from broker')
-      this.setState({ brokerConnection: false })
-      clearInterval(this.heartbeatTimer)
-      setTimeout(this.initConnection(), 3000)
+      this.killAllAndRevive()
     })
 
     this.client.on('deviceEvent', (deviceType, deviceId, eventType, format, payload) => {
@@ -142,6 +141,17 @@ class MainContainer extends Component {
     this.heartbeats.forEach((obj) => {
       // compare the lastHeard value to the current time
       const diff = Date.now() - new Date(obj.lastHeard).getTime()
+
+      if (diff > this.activeThreshold) {
+        // manually switch the class (color)
+        document.getElementById(`${obj.id}`).classList.add('status-inactive')
+      } else {
+        const classList = document.getElementById(`${obj.id}`).classList
+        if (classList.value.includes('status-inactive')) {
+          document.getElementById(`${obj.id}`).classList.remove('status-inactive')
+        }
+      }
+
       // if the diff is > our threshold (set in constructor)
       if (diff > this.heartbeatThreshold) {
         // remove it from this.state.activeTags
@@ -159,14 +169,17 @@ class MainContainer extends Component {
     })
   }
 
+  killAllAndRevive () {
+    console.log('disconnected from broker')
+    this.setState({ brokerConnection: false })
+    clearInterval(this.heartbeatInterval)
+    setTimeout(() => { this.initConnection() }, 3000)
+  }
+
   render () {
     const allTags = this.state.activeTags.map((tag, index) => {
       return (
-        <tr
-          id={tag.id}
-          className={this.state.brokerConnection ? 'status-good' : 'status-error'}
-          key={index}
-        >
+        <tr id={tag.id} className='tag-row status-good' key={index}>
           <td id={`${tag.id}-id`} className='tag-id'>{tag.id}</td>
           <td id={`${tag.id}-name`} className='tag-name'>{tag.name}</td>
           <td id={`${tag.id}-site`} className='tag-site'>{tag.site}</td>
@@ -191,6 +204,9 @@ class MainContainer extends Component {
 
     return (
       <div className='main-container'>
+        <div className='nav-bar'>
+          <img src='img/light_hexagon.svg' alt='refresh' />
+        </div>
         <table className='device-list'>
           <thead>
             <tr
