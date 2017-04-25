@@ -53,6 +53,10 @@ class MainContainer extends Component {
 
   componentDidMount () {
     this.initConnection()
+
+    setTimeout(() => {
+      this.killAllAndRevive()
+    }, 4000)
   }
 
   initConnection () {
@@ -218,38 +222,39 @@ class MainContainer extends Component {
   }
 
   render () {
-    let allTags = []
-    if (this.state.brokerConnection) {
-      allTags = this.state.activeTags.map((tag, index) => {
-        return (
-          <tr id={tag.id} className='tag-row status-good' key={index}>
-            <td id={`${tag.id}-id`} className='tag-id'>{tag.id}</td>
-            <td id={`${tag.id}-name`} className='tag-name'>{tag.name}</td>
-            <td id={`${tag.id}-site`} className='tag-site'>{tag.site}</td>
-            <td id={`${tag.id}-last-heard`} className='tag-last-heard' />
-            <td id={`${tag.id}-bad-bend`} className='tag-bad-bend' />
+    const allTags = this.state.activeTags.map((tag, index) => {
+      return (
+        <tr id={tag.id} className='tag-row status-good' key={index}>
+          <td id={`${tag.id}-id`} className='tag-id'>{tag.id}</td>
+          <td id={`${tag.id}-name`} className='tag-name'>{tag.name}</td>
+          <td id={`${tag.id}-site`} className='tag-site'>{tag.site}</td>
+          <td id={`${tag.id}-last-heard`} className='tag-last-heard' />
+          <td id={`${tag.id}-bad-bend`} className='tag-bad-bend' />
 
-            <td id={`${tag.id}-mic`} className='tag-mic' />
-            <td id={`${tag.id}-humid`} className='tag-humid' />
-            <td id={`${tag.id}-baro`} className='tag-baro' />
-            <td id={`${tag.id}-uv`} className='tag-uv' />
+          <td id={`${tag.id}-mic`} className='tag-mic' />
+          <td id={`${tag.id}-humid`} className='tag-humid' />
+          <td id={`${tag.id}-baro`} className='tag-baro' />
+          <td id={`${tag.id}-uv`} className='tag-uv' />
 
-            <td id={`${tag.id}-temp`} className='tag-temp' />
-            <td id={`${tag.id}-alt`} className='tag-alt' />
+          <td id={`${tag.id}-temp`} className='tag-temp' />
+          <td id={`${tag.id}-alt`} className='tag-alt' />
 
-            <td id={`${tag.id}-w`} className='tag-w' />
-            <td id={`${tag.id}-x`} className='tag-x' />
-            <td id={`${tag.id}-y`} className='tag-y' />
-            <td id={`${tag.id}-z`} className='tag-z' />
-          </tr>
-        )
-      })
-    }
+          <td id={`${tag.id}-w`} className='tag-w' />
+          <td id={`${tag.id}-x`} className='tag-x' />
+          <td id={`${tag.id}-y`} className='tag-y' />
+          <td id={`${tag.id}-z`} className='tag-z' />
+        </tr>
+      )
+    })
 
     return (
       <div className='main-container'>
-        <div className='nav-bar'>
-          <img src='img/light_hexagon.svg' alt='refresh' />
+        <div className='nav-bar' >
+          <img
+            src='img/light_hexagon.svg'
+            alt='refresh'
+            onClick={() => { this.killAllAndRevive() }}
+          />
         </div>
         <table className='device-list'>
           <thead>
