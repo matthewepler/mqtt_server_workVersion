@@ -29,8 +29,8 @@ class MainContainer extends Component {
       'id': 'server-status-dashboard',
       'domain': 'internetofthings.ibmcloud.com',
       'auth-key': process.env.REACT_APP_AUTHKEY,
-      'auth-token': process.env.REACT_APP_AUTHTOKEN,
-      'type': 'shared'
+      'auth-token': process.env.REACT_APP_AUTHTOKEN
+      // 'type': 'shared'
     }
 
     this.client = new Client.IotfApplication(this.appClientConfig)
