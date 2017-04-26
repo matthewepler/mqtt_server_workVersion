@@ -53,10 +53,6 @@ class MainContainer extends Component {
 
   componentDidMount () {
     this.initConnection()
-
-    setTimeout(() => {
-      this.killAllAndRevive()
-    }, 4000)
   }
 
   initConnection () {
@@ -76,6 +72,7 @@ class MainContainer extends Component {
     })
 
     this.client.on('disconnect', () => {
+      console.log('disconnected from broker')
       this.killAllAndRevive()
     })
 
@@ -175,8 +172,6 @@ class MainContainer extends Component {
         activeTags[tagIndex].name = worker.name
         activeTags[tagIndex].site = worker.site
         this.setState({ activeTags })
-      } else {
-        console.log(`Could not find matching data for tag# ${deviceId}`)
       }
     }
   }
@@ -215,10 +210,10 @@ class MainContainer extends Component {
   }
 
   killAllAndRevive () {
-    console.log('disconnected from broker')
+    console.log('killAllAndRevive()')
     this.setState({ brokerConnection: false })
     clearInterval(this.heartbeatInterval)
-    setTimeout(() => { this.initConnection() }, 3000)
+    setTimeout(() => { this.initConnection() }, 5000)
   }
 
   render () {
