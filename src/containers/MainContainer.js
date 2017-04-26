@@ -56,9 +56,12 @@ class MainContainer extends Component {
   }
 
   initConnection () {
+    const idString = 'mqtt-dashboard-' + Date.now().toString()
+    console.log(idString)
+
     this.client = new Client.IotfApplication({
       'org': 'ykq7wp',
-      'id': 'mqtt-dashboard-' + Date.now().toString(),
+      'id': idString,
       'domain': 'internetofthings.ibmcloud.com',
       'auth-key': process.env.REACT_APP_AUTHKEY,
       'auth-token': process.env.REACT_APP_AUTHTOKEN,
