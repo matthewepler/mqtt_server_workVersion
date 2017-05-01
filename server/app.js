@@ -1,10 +1,11 @@
 // server/app.js
 
-const express = require('express')
-const morgan = require('morgan')
-const path = require('path')
+var express = require('express')
+var morgan = require('morgan')
+var path = require('path')
+var client = require('./ibmClient')
 
-const app = express()
+var app = express()
 
 // Setup logger
 app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'))

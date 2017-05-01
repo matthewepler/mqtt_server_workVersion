@@ -9,7 +9,8 @@
 * SASS/SCSS
 src/**/*.css
 
-.env
+# IBM IoT Credentials
+server/.env
 
 # misc
 .DS_Store
