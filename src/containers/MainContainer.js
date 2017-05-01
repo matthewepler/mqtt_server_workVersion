@@ -24,16 +24,7 @@ class MainContainer extends Component {
 
     this.workerData = []
 
-    this.appClientConfig = {
-      'org': 'ykq7wp',
-      'id': 'server-status-dashboard',
-      'domain': 'internetofthings.ibmcloud.com',
-      'auth-key': process.env.REACT_APP_AUTHKEY,
-      'auth-token': process.env.REACT_APP_AUTHTOKEN,
-      'type': 'shared'
-    }
-
-    this.client = new Client.IotfApplication(this.appClientConfig)
+    this.client = null
 
     // a collection of objects that contain deviceId, and lastHeard timestamp.
     // used to determine if the tag is still 'active'.
@@ -66,8 +57,7 @@ class MainContainer extends Component {
       'auth-key': process.env.REACT_APP_AUTHKEY,
       'auth-token': process.env.REACT_APP_AUTHTOKEN,
       'type': 'shared'
-      }
-    )
+    })
     this.client.connect()
 
     this.client.on('connect', () => {
@@ -268,11 +258,11 @@ class MainContainer extends Component {
               id='meta-header'
               className={this.state.brokerConnection ? 'connected-bg' : 'disconnected-bg'}
             >
-              <th colSpan='4'>Metadata</th>
-              <th colSpan='1'>event</th>
-              <th colSpan='4'>envHi</th>
-              <th colSpan='2'>envLo</th>
-              <th colSpan='4'>orient</th>
+              <th id='meta-header-metadata' colSpan='4'>Metadata</th>
+              <th id='meta-header-event' colSpan='1'>event</th>
+              <th id='meta-header-envHi' colSpan='4'>envHi</th>
+              <th id='meta-header-envLo' colSpan='2'>envLo</th>
+              <th id='meta-header-orient' colSpan='4'>orient</th>
             </tr>
             <tr
               id='header'

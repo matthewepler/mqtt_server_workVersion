@@ -7,6 +7,7 @@ $connected: #00FF7F;
 $error: #FF6347;
 
 .main-container {
+  overflow-x: auto;
   padding: 20px;
 
   .nav-bar img {
@@ -18,7 +19,6 @@ $error: #FF6347;
   table {
     border-collapse: collapse;
     border-bottom: 1px solid white;
-    table-layout: fixed;
 
     th, td {
       border-right: 1px solid $darkgrey;
@@ -97,7 +97,11 @@ $error: #FF6347;
 }
 
 // Column widths
-#header { table-layout: fixed }
-#header-id { width: 100px }
-#header-last-heard { width: 300px }
-#header-bad-bend { width: 100px }
+.tag-site { white-space: nowrap; }
+
+// #meta-header-metadata { width: 100px }
+// #meta-header-event { width: 300px }
+// #meta-header-envHi { width: 100px }
+// #meta-header-envLo { width: 150px }
+// #meta-header-orient { width: 150px }
+
