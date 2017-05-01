@@ -3,7 +3,6 @@
 var express = require('express')
 var morgan = require('morgan')
 var path = require('path')
-var client = require('./ibmClient')
 
 var app = express()
 

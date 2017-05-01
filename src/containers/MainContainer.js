@@ -6,6 +6,7 @@ TO-DO
 import React, { Component } from 'react'
 import Client from 'ibmiotf'
 import sheetsu from 'sheetsu-node'
+var io = require('socket.io')()
 
 // helpers
 import { getCurrTimeString } from './helpers/utils'
@@ -44,6 +45,10 @@ class MainContainer extends Component {
 
   componentDidMount () {
     this.initConnection()
+
+    io.on('connection', function () {
+      console.log('client has connected to socket')
+    })
   }
 
   initConnection () {
