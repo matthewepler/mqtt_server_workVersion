@@ -6,7 +6,7 @@ TO-DO
 import React, { Component } from 'react'
 import Client from 'ibmiotf'
 import sheetsu from 'sheetsu-node'
-var io = require('socket.io')()
+import io from 'socket.io-client'
 
 // helpers
 import { getCurrTimeString } from './helpers/utils'
@@ -46,8 +46,10 @@ class MainContainer extends Component {
   componentDidMount () {
     this.initConnection()
 
-    io.on('connection', function () {
-      console.log('client has connected to socket')
+    var socket = io('http://localhost:5000')
+    socket.emit('test', {funky: 'monkey'})
+    socket.on('test', function(data) {
+      console.log(data)
     })
   }
 
@@ -59,8 +61,8 @@ class MainContainer extends Component {
       'org': 'ykq7wp',
       'id': idString,
       'domain': 'internetofthings.ibmcloud.com',
-      'auth-key': process.env.REACT_APP_AUTHKEY,
-      'auth-token': process.env.REACT_APP_AUTHTOKEN,
+      'auth-key': 'a-ykq7wp-cnuhjhye5z',
+      'auth-token': '&K_yj9KS!@zt4@rkIM',
       'type': 'shared'
     })
     this.client.connect()
