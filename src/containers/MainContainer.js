@@ -42,7 +42,6 @@ class MainContainer extends Component {
     var socket = io()
     
     socket.on('ibm_connected', (data) => {
-      socket.emit('test', {funky: 'monkey'})
       console.log('connected to IBM')
       this.setState({ brokerConnection: true })
       this.heartbeatInterval = setInterval(() => {
@@ -55,7 +54,7 @@ class MainContainer extends Component {
     })
 
     socket.on('deviceEvent', (eventData) => {
-      console.log(eventData);
+      // console.log(eventData);
 
       // check to see if this tag is already in the list of active tags
       const tagIndex = this.heartbeats.findIndex((obj) => {
@@ -185,7 +184,6 @@ class MainContainer extends Component {
   }
 
   render () {
-    console.log(`this.state.brokerConnection: ${this.state.brokerConnection}`)
     const allTags = this.state.activeTags.map((tag, index) => {
       return (
         <tr id={tag.id} className='tag-row status-good' key={index}>

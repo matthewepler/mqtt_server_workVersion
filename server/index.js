@@ -53,19 +53,13 @@ io.on('connection', function (socket) {
         });
       })
 
-      socket.on('test', function (data) {
-        console.log(data)
-      })
+      // socket.on('test', function (data) {
+      //   console.log(data)
+      // })
+      // socket.emit('test', {hello: 'world'})
 
       socket.on('disconnect', function () {
         console.log('socket connection from client is now disconnected')
       })
     })
-
-  
-
-  // other socket func. examples:
-
-  // socket.emit('test', {hello: 'world'})
-
 })
