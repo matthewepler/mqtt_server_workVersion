@@ -1,8 +1,3 @@
-/*
-TO-DO
-[ ] remove tag from list when no longer connected
-*/
-
 import React, { Component } from 'react'
 import Client from 'ibmiotf'
 import sheetsu from 'sheetsu-node'
@@ -44,63 +39,35 @@ class MainContainer extends Component {
   }
 
   componentDidMount () {
-    this.initConnection()
-
     var socket = io('http://localhost:5000')
     socket.emit('test', {funky: 'monkey'})
-    socket.on('test', function(data) {
-      console.log(data)
-    })
-  }
 
-  initConnection () {
-    const idString = 'mqtt-dashboard-' + Date.now().toString()
-    console.log(idString)
-
-    this.client = new Client.IotfApplication({
-      'org': 'ykq7wp',
-      'id': idString,
-      'domain': 'internetofthings.ibmcloud.com',
-      'auth-key': 'a-ykq7wp-cnuhjhye5z',
-      'auth-token': '&K_yj9KS!@zt4@rkIM',
-      'type': 'shared'
-    })
-    this.client.connect()
-
-    this.client.on('connect', () => {
-      console.log('connected to broker')
-      this.client.subscribeToDeviceEvents('hcs_tag', '+', 'envHi', 'json')
-      this.client.subscribeToDeviceEvents('hcs_tag', '+', 'envLo', 'json')
-      this.client.subscribeToDeviceEvents('hcs_tag', '+', 'event', 'json')
-      this.client.subscribeToDeviceEvents('hcs_tag', '+', 'orient', 'json')
+    socket.on('ibm_connected', (data) => {
+      console.log('connected to IBM')
       this.setState({ brokerConnection: true })
       this.heartbeatInterval = setInterval(() => {
         this.checkHeartbeat()
       }, this.heartbeatTimer)
     })
 
-    this.client.on('disconnect', () => {
-      console.log('disconnected from broker')
-      this.killAllAndRevive()
+    socket.on('disconnect', () => {
+      this.killAllAndRevive();
     })
 
-    this.client.on('deviceEvent', (deviceType, deviceId, eventType, format, payload) => {
-      if (this.debug) console.log(`${payload}`)
-
-      // payload is an array of integers and needs coercing
-      const data = JSON.parse(String(payload))
+    socket.on('deviceEvent', (eventData) => {
+      console.log(eventData);
 
       // check to see if this tag is already in the list of active tags
       const tagIndex = this.heartbeats.findIndex((obj) => {
-        return obj.id === deviceId
+        return obj.id === eventData.deviceId
       })
 
       // if it's not, add it to the list of active tags
       if (tagIndex < 0) {
-        this.addTag(deviceId)
+        this.addTag(eventData.deviceId)
       } else {
         // update the tag with the payload data
-        this.updateTag(deviceId, eventType, data, tagIndex)
+        this.updateTag(eventData.deviceId, eventData.eventType, eventData.data, tagIndex)
       }
     })
   }
@@ -128,13 +95,6 @@ class MainContainer extends Component {
       site: 'unknown'
     })
     this.setState({ activeTags })
-    // const activeTags = this.state.activeTags
-    // const thisWorker = this.workerData.find((obj) => {
-    //   return obj.id === id
-    // })
-
-    // activeTags.push(thisWorker)
-    // this.setState({ activeTags })
 
     this.heartbeats.push({
       id,
@@ -225,6 +185,7 @@ class MainContainer extends Component {
   }
 
   render () {
+    console.log(`this.state.brokerConnection: ${this.state.brokerConnection}`)
     const allTags = this.state.activeTags.map((tag, index) => {
       return (
         <tr id={tag.id} className='tag-row status-good' key={index}>

@@ -16,12 +16,18 @@ function initConnection (server) {
   client.on('connect', () => {
     console.log('server connected to broker!')
 
-    // send connected event to front-end (setState brokerConnection = true, set heartbeat, etc.)
+    // send connected event to front-end 
+    // (setState brokerConnection = true, set heartbeat, etc.)
 
     client.subscribeToDeviceEvents('hcs_tag', '+', 'envHi', 'json')
     client.subscribeToDeviceEvents('hcs_tag', '+', 'envLo', 'json')
     client.subscribeToDeviceEvents('hcs_tag', '+', 'event', 'json')
     client.subscribeToDeviceEvents('hcs_tag', '+', 'orient', 'json')
+
+    // IBM event handlers
+    client.on('deviceEvent', (deviceType, deviceId, eventType, format, payload) => {
+      // send to socket
+    })
   })
 }
 
