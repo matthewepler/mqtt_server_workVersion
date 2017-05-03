@@ -39,11 +39,11 @@ class MainContainer extends Component {
   }
 
   componentDidMount () {
-    var socket = io()
-    socket.emit('test', {funky: 'monkey'})
+    var socket = 'io'();
 
     socket.on('ibm_connected', (data) => {
       console.log('connected to IBM')
+      socket.emit('test', {funky: 'monkey'})
       this.setState({ brokerConnection: true })
       this.heartbeatInterval = setInterval(() => {
         this.checkHeartbeat()
