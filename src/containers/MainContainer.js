@@ -41,7 +41,7 @@ class MainContainer extends Component {
   componentDidMount () {
     // change this to localhost:whatever when working locally
     // TODO: add dynamic string according to dev/prod environment
-    var socket = io('https://evening-fjord-27192.herokuapp.com/')
+    var socket = io()
     socket.emit('test', {funky: 'monkey'})
 
     socket.on('ibm_connected', (data) => {
@@ -183,7 +183,7 @@ class MainContainer extends Component {
     console.log('killAllAndRevive()')
     this.setState({ brokerConnection: false })
     clearInterval(this.heartbeatInterval)
-    setTimeout(() => { this.initConnection() }, 5000)
+    // setTimeout(() => { this.initConnection() }, 5000)
   }
 
   render () {
