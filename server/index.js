@@ -15,12 +15,6 @@ var io = require('socket.io')(server)
 io.on('connection', function (socket) {
   console.log('server has io connection, yo!')
 
-  // socket.emit('test', {hello: 'world'})
-
-  // socket.on('test', function (data) {
-  //   console.log(data)
-  // })
-
   // IBM STUFF
   var client = new IBMClient.IotfApplication({
       'org': 'ykq7wp',
@@ -63,4 +57,12 @@ io.on('connection', function (socket) {
   socket.on('disconnect', function () {
     console.log('socket connection from client is now disconnected')
   })
+
+  // other socket func. examples:
+
+  // socket.emit('test', {hello: 'world'})
+
+  // socket.on('test', function (data) {
+  //   console.log(data)
+  // })
 })
