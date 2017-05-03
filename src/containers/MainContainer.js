@@ -39,8 +39,6 @@ class MainContainer extends Component {
   }
 
   componentDidMount () {
-    // change this to localhost:whatever when working locally
-    // TODO: add dynamic string according to dev/prod environment
     var socket = io()
     socket.emit('test', {funky: 'monkey'})
 
