@@ -39,7 +39,9 @@ class MainContainer extends Component {
   }
 
   componentDidMount () {
-    var socket = io('http://localhost:5000')
+    // change this to localhost:whatever when working locally
+    // TODO: add dynamic string according to dev/prod environment
+    var socket = io('https://evening-fjord-27192.herokuapp.com/')
     socket.emit('test', {funky: 'monkey'})
 
     socket.on('ibm_connected', (data) => {
