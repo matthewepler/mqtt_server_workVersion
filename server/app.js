@@ -50,7 +50,6 @@ app.get('/dashboard', stormpath.authenticationRequired, (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'))
 })
 
-// Serve static assets
 app.use(express.static(path.resolve(__dirname, '..', 'build')))
 
 module.exports = app

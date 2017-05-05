@@ -10,10 +10,22 @@ $error: #FF6347;
   overflow-x: auto;
   padding: 20px;
 
-  .nav-bar img {
-    cursor: pointer;
-    margin-bottom: 1.5rem;
-    width: 75px;
+  .nav-bar {
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+
+    img {
+      cursor: pointer;
+      margin-bottom: 1.5rem;
+      width: 75px;
+    }
+
+    button {
+      background: none;
+      border-style: none;
+      color: $darkgrey;
+    }
   }
 
   table {
