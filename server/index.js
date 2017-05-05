@@ -17,49 +17,49 @@ io.on('connection', function (socket) {
 
   // IBM STUFF
   var client = new IBMClient.IotfApplication({
-      'org': 'ykq7wp',
-      'id': 'mqtt_dashboard_express_2384',
-      'domain': 'internetofthings.ibmcloud.com',
-      'auth-key': process.env.AUTHKEY,
-      'auth-token': process.env.AUTHTOKEN,
-      'type': 'shared'
-    })
+    'org': 'ykq7wp',
+    'id': 'mqtt_dashboard_express_2384',
+    'domain': 'internetofthings.ibmcloud.com',
+    'auth-key': process.env.AUTHKEY,
+    'auth-token': process.env.AUTHTOKEN,
+    'type': 'shared'
+  })
 
-    client.connect()
+  client.connect()
 
-    client.on('connect', () => {
-      console.log('server connected to broker!')
+  client.on('connect', () => {
+    console.log('server connected to broker!')
 
-      socket.emit('ibm_connected', {})
-      // send connected event to front-end 
-      // (setState brokerConnection = true, set heartbeat, etc.)
+    socket.emit('ibm_connected', {})
+    // send connected event to front-end
+    // (setState brokerConnection = true, set heartbeat, etc.)
 
-      client.subscribeToDeviceEvents('hcs_tag', '+', 'envHi', 'json')
-      client.subscribeToDeviceEvents('hcs_tag', '+', 'envLo', 'json')
-      client.subscribeToDeviceEvents('hcs_tag', '+', 'event', 'json')
-      client.subscribeToDeviceEvents('hcs_tag', '+', 'orient', 'json')
+    client.subscribeToDeviceEvents('hcs_tag', '+', 'envHi', 'json')
+    client.subscribeToDeviceEvents('hcs_tag', '+', 'envLo', 'json')
+    client.subscribeToDeviceEvents('hcs_tag', '+', 'event', 'json')
+    client.subscribeToDeviceEvents('hcs_tag', '+', 'orient', 'json')
 
-      // IBM event handlers
-      client.on('deviceEvent', (deviceType, deviceId, eventType, format, payload) => {
-        // payload is an array of integers and needs coercing
-        const data = JSON.parse(String(payload))
+    // IBM event handlers
+    client.on('deviceEvent', (deviceType, deviceId, eventType, format, payload) => {
+      // payload is an array of integers and needs coercing
+      const data = JSON.parse(String(payload))
 
-        socket.emit('deviceEvent', {
-          deviceType,
-          deviceId,
-          eventType,
-          format,
-          data,
-        });
-      })
-
-      // socket.on('test', function (data) {
-      //   console.log(data)
-      // })
-      // socket.emit('test', {hello: 'world'})
-
-      socket.on('disconnect', function () {
-        console.log('socket connection from client is now disconnected')
+      socket.emit('deviceEvent', {
+        deviceType,
+        deviceId,
+        eventType,
+        format,
+        data
       })
     })
+
+    // socket.on('test', function (data) {
+    //   console.log(data)
+    // })
+    // socket.emit('test', {hello: 'world'})
+
+    socket.on('disconnect', function () {
+      console.log('socket connection from client is now disconnected')
+    })
+  })
 })

@@ -217,6 +217,9 @@ class MainContainer extends Component {
             alt='refresh'
             onClick={() => { this.killAllAndRevive() }}
           />
+          <form name='logout' action='/logout' method='post'>
+            <button type='submit'>Logout</button>
+          </form>
         </div>
         <table className='device-list'>
           <thead>
