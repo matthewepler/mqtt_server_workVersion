@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Client from 'ibmiotf'
 import sheetsu from 'sheetsu-node'
 import io from 'socket.io-client'
 
@@ -19,8 +18,6 @@ class MainContainer extends Component {
     }
 
     this.workerData = []
-
-    this.client = null
 
     // a collection of objects that contain deviceId, and lastHeard timestamp.
     // used to determine if the tag is still 'active'.
