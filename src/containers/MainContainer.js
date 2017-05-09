@@ -25,7 +25,7 @@ class MainContainer extends Component {
     this.heartbeats = []
     this.heartbeatInterval = null // placeholder for interval timer object
     this.heartbeatTimer = 1000
-    this.activeThreshold = 3000
+    this.activeThreshold = 10000
     this.heartbeatThreshold = 60000 // check every X ms for tag status
 
     this.debug = false
@@ -37,7 +37,7 @@ class MainContainer extends Component {
 
   componentDidMount () {
     var socket = io()
-    
+
     socket.on('ibm_connected', (data) => {
       console.log('connected to IBM')
       this.setState({ brokerConnection: true })
@@ -47,7 +47,7 @@ class MainContainer extends Component {
     })
 
     socket.on('disconnect', () => {
-      this.killAllAndRevive();
+      this.killAllAndRevive()
     })
 
     socket.on('deviceEvent', (eventData) => {

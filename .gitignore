@@ -10,6 +10,7 @@
 src/**/*.css
 
 # IBM IoT Credentials
+vcap-local.json
 server/.env
 
 # misc
