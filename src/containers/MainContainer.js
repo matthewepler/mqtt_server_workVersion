@@ -53,6 +53,10 @@ class MainContainer extends Component {
     socket.on('deviceEvent', (eventData) => {
       // console.log(eventData);
 
+      if (eventData.eventType === 'event' && eventData.data.data.data === 'ON') {
+        console.log(`event from device#: ${eventData.deviceId}`)
+      }
+
       // check to see if this tag is already in the list of active tags
       const tagIndex = this.heartbeats.findIndex((obj) => {
         return obj.id === eventData.deviceId

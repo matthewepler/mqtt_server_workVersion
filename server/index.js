@@ -3,7 +3,7 @@ var server = require('http').Server(app)
 var IBMClient = require('ibmiotf')
 require('dotenv').config()
 
-var PORT = process.env.PORT || 9000
+var PORT = process.env.PORT || 5000
 
 server.listen(PORT, () => {
   console.log(`App listening on port ${PORT}!`)
@@ -30,7 +30,7 @@ io.on('connection', function (socket) {
   client.on('connect', () => {
     console.log('server connected to broker!')
 
-    socket.emit('ibm_connected', {})
+    io.emit('ibm_connected', {})
     // send connected event to front-end
     // (setState brokerConnection = true, set heartbeat, etc.)
 
@@ -44,7 +44,13 @@ io.on('connection', function (socket) {
       // payload is an array of integers and needs coercing
       const data = JSON.parse(String(payload))
 
-      socket.emit('deviceEvent', {
+      if (eventType === 'event') {
+        if (data.data.data === 'ON') {
+          console.log(`event from device#: ${deviceId}`)
+        }
+      }
+
+      io.emit('deviceEvent', {
         deviceType,
         deviceId,
         eventType,
@@ -52,11 +58,6 @@ io.on('connection', function (socket) {
         data
       })
     })
-
-    // socket.on('test', function (data) {
-    //   console.log(data)
-    // })
-    // socket.emit('test', {hello: 'world'})
 
     socket.on('disconnect', function () {
       console.log('socket connection from client is now disconnected')

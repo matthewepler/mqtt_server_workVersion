@@ -4,6 +4,7 @@ var express = require('express')
 var morgan = require('morgan')
 var path = require('path')
 var stormpath = require('express-stormpath')
+require('dotenv').config()
 
 var app = express()
 
