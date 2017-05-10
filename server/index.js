@@ -46,7 +46,7 @@ io.on('connection', function (socket) {
 
       if (eventType === 'event') {
         if (data.data.data === 'ON') {
-          console.log(`event from device#: ${deviceId}`)
+          // console.log(`event from device#: ${deviceId}`)
         }
       }
 

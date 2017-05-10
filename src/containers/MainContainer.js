@@ -54,7 +54,7 @@ class MainContainer extends Component {
       // console.log(eventData);
 
       if (eventData.eventType === 'event' && eventData.data.data.data === 'ON') {
-        console.log(`event from device#: ${eventData.deviceId}`)
+        // console.log(`event from device#: ${eventData.deviceId}`)
       }
 
       // check to see if this tag is already in the list of active tags
