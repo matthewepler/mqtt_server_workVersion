@@ -36,6 +36,13 @@ app.use(stormpath.init(app, {
     register: {
       enabled: false
     }
+  },
+  preLoginHandler: function (formData, req, res, next) {
+    console.log('Got login request', formData)
+    if (!req.secure) {
+      res.redirect('https://' + req.hostname + '/login')
+    }
+    next()
   }
 }))
 
@@ -43,22 +50,23 @@ app.on('stormpath.ready', function () {
   console.log('Stormpath Ready!')
 })
 
-app.get('/', (req, res, next) => {
-  console.log(req)
+app.get('/', (req, res) => {
   if (!req.secure) {
-    console.log('** insecure request. redirecting. **')
-    res.redirect('https://' + req.hostname + req.originalUrl)
+    res.redirect('https://' + req.hostname + '/login')
+  } else {
+    res.redirect('/login')
   }
-  console.log('** secure request **')
-  res.redirect('/login')
+})
+
+app.get('/login', (req, res, next) => {
+  if (!req.secure) {
+    res.redirect('https://' + req.hostname + '/login')
+  } else {
+    next()
+  }
 })
 
 app.get('/dashboard', stormpath.authenticationRequired, (req, res) => {
-  if (!req.secure) {
-    console.log('** insecure request. redirecting. **')
-    res.redirect('https://' + req.hostname + req.originalUrl)
-  }
-  console.log('** secure request **')
   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'))
 })
 
