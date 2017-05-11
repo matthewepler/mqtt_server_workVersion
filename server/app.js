@@ -43,12 +43,20 @@ app.on('stormpath.ready', function () {
   console.log('Stormpath Ready!')
 })
 
-app.get('/', (req, res) => {
-  res.redirect('/login')
+app.get('/', (req, res, next) => {
+  if (req.secure) {
+    res.redirect('/login')
+  } else {
+    res.redirect('https://' + req.headers.host + req.url)
+  }
 })
 
 app.get('/dashboard', stormpath.authenticationRequired, (req, res) => {
-  res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'))
+  if (req.secure) {
+    res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'))
+  } else {
+    res.redirect('https://' + req.headers.host + req.url)
+  }
 })
 
 app.use(express.static(path.resolve(__dirname, '..', 'build')))
