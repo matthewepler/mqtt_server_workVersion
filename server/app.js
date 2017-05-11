@@ -44,17 +44,22 @@ app.on('stormpath.ready', function () {
 })
 
 app.get('/', (req, res, next) => {
+  console.log(req)
   if (req.secure) {
+    console.log('** secure request **')
     res.redirect('/login')
   } else {
+    console.log('** insecure request. redirecting. **')
     res.redirect('https://' + req.headers.host + req.url)
   }
 })
 
 app.get('/dashboard', stormpath.authenticationRequired, (req, res) => {
   if (req.secure) {
+    console.log('** secure request **')
     res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'))
   } else {
+    console.log('** insecure request. redirecting. **')
     res.redirect('https://' + req.headers.host + req.url)
   }
 })
