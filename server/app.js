@@ -4,6 +4,7 @@ var express = require('express')
 var morgan = require('morgan')
 var path = require('path')
 var stormpath = require('express-stormpath')
+var helmet = require('helmet')
 require('dotenv').config()
 
 var app = express()
@@ -39,11 +40,22 @@ app.use(stormpath.init(app, {
   },
   preLoginHandler: function (formData, req, res, next) {
     console.log('Got login request', formData)
-    if (!req.secure) {
-      res.redirect('https://' + req.hostname + '/login')
-    }
+    console.log('*** @preLoginHandler: req.protocol === ', req.protocol)
+
+    res.set({
+      'x_forwarded_proto': 'https'
+    })
+
     next()
   }
+}))
+
+// Helmet for enforcing HTTPS
+// Sets "Strict-Transport-Security: max-age=5184000; includeSubDomains".
+var sixtyDaysInSeconds = 5184000
+app.use(helmet.hsts({
+  force: true,
+  maxAge: sixtyDaysInSeconds
 }))
 
 app.on('stormpath.ready', function () {
@@ -51,22 +63,17 @@ app.on('stormpath.ready', function () {
 })
 
 app.get('/', (req, res) => {
+  console.log('*** @/: req.protocol === ', req.protocol)
   if (!req.secure) {
+    console.log('*** @preLoginHander: insecure request, redirecting')
     res.redirect('https://' + req.hostname + '/login')
   } else {
     res.redirect('/login')
   }
 })
 
-app.get('/login', (req, res, next) => {
-  if (!req.secure) {
-    res.redirect('https://' + req.hostname + '/login')
-  } else {
-    next()
-  }
-})
-
 app.get('/dashboard', stormpath.authenticationRequired, (req, res) => {
+  console.log('@/dashboard: secure? ', req.secure)
   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'))
 })
 
