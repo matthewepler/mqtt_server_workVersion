@@ -31,14 +31,37 @@
 #filter-toggle-menu {
   display: flex;
 
+  #filter-menu  {
+    display: flex; 
+    
+    #tag-id-input  {
+      border: solid 2px black;
+      border-radius: 5px;
+      padding: 3px 10px 3px 10px;
+      text-align: center;
+      width: 110px;
+    }
+
+    #site-select {
+      @extend .toggle-button;
+      background: black;
+      color: white;
+    }
+  }
+  
+  #toggle-menu {
+    display: flex;
+  }
+
   .toggle-button {
     background: black;
+    border: solid 2px black;
     color: white;
     border-radius: 10px;
     font-size: 1rem;
     height: 35px;
     margin-left: 0.5rem;
-    padding: 9px;
+    padding: 8px;
     text-align: center;
   }
 
@@ -48,14 +71,5 @@
     color: black;
   }
 
-  #toggle-menu {
-    display: flex;
-  }
-
-  #filter-menu .filter-button {
-    @extend .toggle-button;
-    background: black;
-    color: white;
-  }
 }
 

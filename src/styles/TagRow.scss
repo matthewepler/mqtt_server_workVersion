@@ -35,7 +35,12 @@ h4 {
   }
 
   #site {
+    background: $lightgrey;
+    border-radius: 5px;
+    display: inline-block;
     font-size: 0.9rem;
+    padding: 5px;
+    max-width: 100%;
   }
 }
 

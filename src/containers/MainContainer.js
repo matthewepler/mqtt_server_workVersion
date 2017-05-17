@@ -16,7 +16,7 @@ class MainContainer extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      activeTags: [],
+      activeTags: [], // tags heard from MQTT broker
       brokerConnection: false,
       dbConnected: false,
       site: 'All Sites',
@@ -26,14 +26,16 @@ class MainContainer extends Component {
         envhi: false,
         envlo: false,
         orientation: false
-      }
+      },
+      tagId: ''
     }
 
-    this.workerData = []
+    this.workerData = [] // data from Google Sheet DB
 
     // a collection of objects that contain deviceId, and lastHeard timestamp.
     // used to determine if the tag is still 'active'.
     // seperated from state because of the frequency of updates.
+    // ^ necessary?
     this.heartbeats = []
     this.heartbeatInterval = null // placeholder for interval timer object
     this.heartbeatTimer = 1000
@@ -197,7 +199,6 @@ class MainContainer extends Component {
   }
 
   handleToggle (e) {
-    console.log(e.target.classList)
     const label = e.target.innerHTML.toLowerCase()
     const toggles = this.state.toggles
     toggles[label] = !toggles[label]
@@ -208,23 +209,44 @@ class MainContainer extends Component {
 
   onFilterChange (e) {
     console.log(e.target.value)
+    this.setState({ site: e.target.value })
+  }
+
+  handleTagIdFilter (e) {
+    this.setState({ tagId: e.target.value })
+  }
+
+  handleFormSubmit (e) {
+    e.preventDefault()
   }
 
   render () {
-    console.log('rendering...')
+    let tags
 
-    const tags = this.state.activeTags.map((tag, index) => {
-      if (this.state.site === 'All Sites' || this.state.site === tag.site) {
-        return (
-          <TagRow
-            key={index}
-            id={tag.id}
-            site={tag.site}
-            toggles={this.state.toggles}
-          />
-        )
+    if (this.state.tagId.length > 0) {
+      const tag = this.state.activeTags.find((tag) => {
+        console.log(`${tag.id} === ${this.state.tagId}`)
+        return tag.id === this.state.tagId
+      })
+      if (tag) {
+        tags = <TagRow id={tag.id} site={tag.site} toggles={this.state.toggles} />
+      } else {
+        tags = <h1>No Results Found</h1>
       }
-    })
+    } else {
+      tags = this.state.activeTags.map((tag, index) => {
+        if (this.state.site === 'All Sites' || this.state.site === tag.site) {
+          return (
+            <TagRow
+              key={index}
+              id={tag.id}
+              site={tag.site}
+              toggles={this.state.toggles}
+            />
+          )
+        }
+      })
+    }
 
     return (
       <div className='main-container'>
@@ -237,9 +259,16 @@ class MainContainer extends Component {
 
           <div id='filter-toggle-menu'>
             <div id='filter-menu'>
+              <input
+                id='tag-id-input'
+                type='text'
+                value={this.state.tagId}
+                placeholder='tag id'
+                onChange={(event) => this.handleTagIdFilter(event)}
+              />
               <select
-                className='filter-button'
-                onChange={this.onFilterChange}
+                id='site-select'
+                onChange={(event) => this.onFilterChange(event)}
                 value={this.state.site}
               >
                 <option value='all-sites'>All Sites</option>
