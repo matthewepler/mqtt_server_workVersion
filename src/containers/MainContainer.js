@@ -197,12 +197,13 @@ class MainContainer extends Component {
   }
 
   handleToggle (e) {
-    console.log('this = ', this)
-    console.log(e.target.innerHTML.toLowerCase())
+    console.log(e.target.classList)
     const label = e.target.innerHTML.toLowerCase()
     const toggles = this.state.toggles
     toggles[label] = !toggles[label]
     this.setState({ toggles })
+
+    e.target.classList.toggle('toggle-button-off')
   }
 
   onFilterChange (e) {

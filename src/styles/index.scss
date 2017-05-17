@@ -31,7 +31,7 @@
 #filter-toggle-menu {
   display: flex;
 
-    .toggle-button {
+  .toggle-button {
     background: black;
     color: white;
     border-radius: 10px;
@@ -42,14 +42,20 @@
     text-align: center;
   }
 
+  .toggle-button-off {
+    background: white;
+    border: solid 2px black;
+    color: black;
+  }
+
   #toggle-menu {
     display: flex;
   }
 
   #filter-menu .filter-button {
     @extend .toggle-button;
-    background: white;
-    border: solid 2px black;
-    color: black;
+    background: black;
+    color: white;
   }
 }
+
