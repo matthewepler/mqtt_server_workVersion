@@ -19,13 +19,13 @@ class MainContainer extends Component {
       activeTags: [], // tags heard from MQTT broker
       brokerConnection: false,
       dbConnected: false,
-      site: 'All Sites',
+      site: 'all sites',
       toggles: {
-        events: false,
-        motions: false,
-        envhi: false,
-        envlo: false,
-        orientation: false
+        events: true,
+        motions: true,
+        envhi: true,
+        envlo: true,
+        orientation: true
       },
       tagId: ''
     }
@@ -121,12 +121,13 @@ class MainContainer extends Component {
     // also, calling this.setState() does not guarantee when the change will
     // take place immediately since state updates result in a pending state.
 
-    // data payloads eventType is either 'event' (something bad) or r
-    // regular updates that bear the name of the data type, i.e. 'orient'
+    // data payloads eventType is either 'event' (something bad) or regular
+    // updates that bear the name of the data type, i.e. 'accel'
 
     // update the 'last heard' timestamp so we know if it's active
-    this.heartbeats[tagIndex].lastHeard = Date.now()
-    document.getElementById(`${deviceId}-last-heard`).innerHTML = getCurrTimeString()
+    this.heartbeats[tagIndex].lastHeard = Date.now() - this.heartbeats[tagIndex].lastHeard
+    document.getElementById(`${deviceId}-last-heard`).innerHTML = this.heartbeats[tagIndex].lastHeard
+    // !! -- eliminate getCurrSTring() if not using
 
     if (eventType === 'event') {
       // only bad_bend exists right now. put logic here in future for other types
@@ -207,12 +208,32 @@ class MainContainer extends Component {
     e.target.classList.toggle('toggle-button-off')
   }
 
-  onFilterChange (e) {
-    console.log(e.target.value)
+  handleSiteFilterChange (e) {
+    if (e.target.value !== 'all-sites') {
+      if (!e.target.classList.contains('filter-button-on')) {
+        e.target.classList.add('filter-button-on')
+      }
+    } else {
+      if (e.target.classList.contains('filter-button-on')) {
+        e.target.classList.remove('filter-button-on')
+      }
+    }
     this.setState({ site: e.target.value })
   }
 
   handleTagIdFilter (e) {
+    if (this.state.tagId.length > 0 && e.target.value.length === 0) {
+      if (e.target.classList.contains('filter-button-on')) {
+        e.target.classList.remove('filter-button-on')
+      }
+    }
+
+    if (this.state.tagId.length === 0 && e.target.value.length > 0) {
+      if (!e.target.classList.contains('filter-button-on')) {
+        e.target.classList.add('filter-button-on')
+      }
+    }
+
     this.setState({ tagId: e.target.value })
   }
 
@@ -225,7 +246,6 @@ class MainContainer extends Component {
 
     if (this.state.tagId.length > 0) {
       const tag = this.state.activeTags.find((tag) => {
-        console.log(`${tag.id} === ${this.state.tagId}`)
         return tag.id === this.state.tagId
       })
       if (tag) {
@@ -235,7 +255,7 @@ class MainContainer extends Component {
       }
     } else {
       tags = this.state.activeTags.map((tag, index) => {
-        if (this.state.site === 'All Sites' || this.state.site === tag.site) {
+        if (this.state.site === 'all sites' || this.state.site === tag.site) {
           return (
             <TagRow
               key={index}
@@ -244,6 +264,8 @@ class MainContainer extends Component {
               toggles={this.state.toggles}
             />
           )
+        } else {
+          return ''
         }
       })
     }
@@ -260,25 +282,24 @@ class MainContainer extends Component {
           <div id='filter-toggle-menu'>
             <div id='filter-menu'>
               <input
-                id='tag-id-input'
+                className='filter-button-off'
                 type='text'
                 value={this.state.tagId}
                 placeholder='tag id'
                 onChange={(event) => this.handleTagIdFilter(event)}
               />
               <select
-                id='site-select'
-                onChange={(event) => this.onFilterChange(event)}
+                onChange={(event) => this.handleSiteFilterChange(event)}
                 value={this.state.site}
               >
-                <option value='all-sites'>All Sites</option>
+                <option value='all-sites'>all sites</option>
                 <option value='hcs'>HCS</option>
                 <option value='51-jay-st'>51 Jay Street</option>
               </select>
             </div>
             <div id='toggle-menu'>
               <div
-                className='toggle-button'
+                className='toggle-button '
                 onClick={(event) => this.handleToggle(event)}
                 data-label='events'
               >

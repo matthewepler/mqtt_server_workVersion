@@ -15,10 +15,37 @@ h4 {
   padding-bottom: 25px;
   max-width: 100%;
 
-  .tag-section {
-    margin-right: 2.5rem;
+  .meta {
+    & div  { 
+      margin-bottom: 10px; 
+    }
+
+    .tagId {}
+    .name {}
+    .site {
+      background: $lightgrey;
+      border-radius: 5px;
+      display: inline-block;
+      font-size: 0.9rem;
+      padding: 5px;
+      max-width: 100%;
+    }
+  }
+
+  .events-wrapper, .motions-wrapper {
+    flex-basis: 300px;
+
+    .events, .motions {
+      align-content: flex-start;
+      display: flex;
+      flex-wrap: wrap;
+    }
   }
 }
+
+.tag-section {
+    margin-right: 2.5rem;
+  }
 
 .data-row {
   display: flex;
@@ -29,44 +56,21 @@ h4 {
   }
 }
 
-#meta {
-  & div  { 
-    margin-bottom: 10px; 
-  }
 
-  #site {
-    background: $lightgrey;
-    border-radius: 5px;
-    display: inline-block;
-    font-size: 0.9rem;
-    padding: 5px;
-    max-width: 100%;
-  }
-}
 
-#events-wrapper, #motions-wrapper {
-  flex-basis: 300px;
-
-  #events, #motions {
-    align-content: flex-start;
-    display: flex;
-    flex-wrap: wrap;
-  }
-}
-
-#orientation .data-row-label {
+.orientation .data-row-label {
   width: 40px;
 }
 
-#envHi .data-row-label {
+.envHi .data-row-label {
   width: 75px;
 }
 
-#envLo .data-row-label {
+.envLo .data-row-label {
   width: 65px;
 }
 
-#envHi, #envLo, #orientation {
+.envHi, .envLo, .orientation {
   font-size: 0.9rem;
 
   & div {

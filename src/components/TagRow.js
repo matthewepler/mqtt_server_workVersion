@@ -10,11 +10,11 @@ function TagRow (props) {
   return (
     <div className='tag-row'>
       {/* Meta */}
-      <div id='meta' className='tag-section'>
+      <div className='meta tag-section'>
         <h4>Meta</h4>
-        <div id='tagId'>999999</div>
-        <div id='name'>First Lastname</div>
-        <div id='site'>51 Jay St.</div>
+        <div id={`${props.id}-tagId`} className='tagId'>999999</div>
+        <div id={`${props.id}-name`} className='name'>First Lastname</div>
+        <div id={`${props.id}-site`} className='site'>51 Jay St.</div>
       </div>
 
       {/* Time Delta */}
@@ -25,43 +25,43 @@ function TagRow (props) {
 
       {/* Events */}
       { props.toggles.events &&
-        <div id='events-wrapper' className='tag-section'>
+        <div className='events-wrapper tag-section'>
           <h4>Events</h4>
-          <div id='events'>
-            <Pill id={'fall'} label={'Fall'} data={'999'} />
-            <Pill id={'struck-by'} label={'Struck By'} data={'999'} />
-            <Pill id={'button-press-safety'} label={'(!) Safety'} data={'999'} />
-            <Pill id={'button-press-emergency'} label={'(!) Emer.'} data={'999'} />
-            <Pill id={'noise'} label={'Noise'} data={'999'} />
-            <Pill id={'vibration'} label={'Vibration'} data={'999'} />
-            <Pill id={'motion'} label={'Motion'} data={'999'} />
-            <Pill id={'heat'} label={'Heat'} data={'999'} />
-            <Pill id={'cold'} label={'Cold'} data={'999'} />
-            <Pill id={'gait'} label={'Gait'} data={'999'} />
+          <div className='events'>
+            <Pill id={`${props.id}-fall`} label={'Fall'} data={'999'} />
+            <Pill id={`${props.id}-struck-by`} label={'Struck By'} data={'999'} />
+            <Pill id={`${props.id}-button-press-safety`} label={'(!) Safety'} data={'999'} />
+            <Pill id={`${props.id}-button-press-emergency`} label={'(!) Emer.'} data={'999'} />
+            <Pill id={`${props.id}-noise`} label={'Noise'} data={'999'} />
+            <Pill id={`${props.id}-vibration`} label={'Vibration'} data={'999'} />
+            <Pill id={`${props.id}-motion`} label={'Motion'} data={'999'} />
+            <Pill id={`${props.id}-heat`} label={'Heat'} data={'999'} />
+            <Pill id={`${props.id}-cold`} label={'Cold'} data={'999'} />
+            <Pill id={`${props.id}-gait`} label={'Gait'} data={'999'} />
           </div>
         </div>
       }
 
       {/* Motions */}
       { props.toggles.motions &&
-        <div id='motions-wrapper' className='tag-section'>
+        <div className='motions-wrapper tag-section'>
           <h4>Motions</h4>
-          <div id='motions'>
-            <Pill id={'bad-bends'} label={'Bad Bends'} data={'999'} />
-            <Pill id={'steps'} label={'Steps'} data={'99999'} />
-            <Pill id={'trips'} label={'Trips'} data={'999'} />
-            <Pill id={'slips'} label={'Slips'} data={'999'} />
-            <Pill id={'squats'} label={'Squats'} data={'999'} />
-            <Pill id={'twists'} label={'Twists'} data={'999'} />
-            <Pill id={'reaches'} label={'Reaches'} data={'999'} />
-            <Pill id={'jumps'} label={'Jumps'} data={'999'} />
+          <div className='motions'>
+            <Pill id={`${props.id}-bad-bends`} label={'Bad Bends'} data={'999'} />
+            <Pill id={`${props.id}-steps`} label={'Steps'} data={'99999'} />
+            <Pill id={`${props.id}-trips`} label={'Trips'} data={'999'} />
+            <Pill id={`${props.id}-slips`} label={'Slips'} data={'999'} />
+            <Pill id={`${props.id}-squats`} label={'Squats'} data={'999'} />
+            <Pill id={`${props.id}-twists`} label={'Twists'} data={'999'} />
+            <Pill id={`${props.id}-reaches`} label={'Reaches'} data={'999'} />
+            <Pill id={`${props.id}-jumps`} label={'Jumps'} data={'999'} />
           </div>
         </div>
       }
 
       {/* EnvHi */}
       { props.toggles.envhi &&
-        <div id='envHi' className='tag-section'>
+        <div className='envHi tag-section'>
           <h4>EnvHi</h4>
           <div className='data-row'>
             <div className='data-row-label'>Mic.</div>
@@ -84,7 +84,7 @@ function TagRow (props) {
 
       {/* EnvLo */}
       { props.toggles.envlo &&
-        <div id='envLo' className='tag-section'>
+        <div className='envLo tag-section'>
           <h4>EnvLo</h4>
           <div className='data-row'>
             <div className='data-row-label'>Temp.</div>
@@ -99,7 +99,7 @@ function TagRow (props) {
 
       {/* Orientation */}
       { props.toggles.orientation &&
-        <div id='orientation' className='tag-section'>
+        <div className='orientation tag-section'>
           <h4>Orientation</h4>
           <div className='data-row'>
             <div className='data-row-label'>W:</div>
