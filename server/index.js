@@ -38,6 +38,10 @@ io.on('connection', function (socket) {
     client.subscribeToDeviceEvents('hcs_tag', '+', 'envLo', 'json')
     client.subscribeToDeviceEvents('hcs_tag', '+', 'event', 'json')
     client.subscribeToDeviceEvents('hcs_tag', '+', 'orient', 'json')
+    client.subscribeToDeviceEvents('hcs_tag', '+', 'accel', 'json')
+    client.subscribeToDeviceEvents('hcs_tag', '+', 'gyro', 'json')
+    client.subscribeToDeviceEvents('hcs_tag', '+', 'magno', 'json')
+    client.subscribeToDeviceEvents('hcs_tag', '+', 'meta', 'json')
 
     // IBM event handlers
     client.on('deviceEvent', (deviceType, deviceId, eventType, format, payload) => {

@@ -1,6 +1,10 @@
+
 import React, { Component } from 'react'
 import sheetsu from 'sheetsu-node'
 import io from 'socket.io-client'
+
+// components
+import TagRow from '../components/TagRow'
 
 // helpers
 import { getCurrTimeString } from './helpers/utils'
@@ -14,7 +18,15 @@ class MainContainer extends Component {
     this.state = {
       activeTags: [],
       brokerConnection: false,
-      dbConnected: false
+      dbConnected: false,
+      site: 'All Sites',
+      toggles: {
+        events: false,
+        motions: false,
+        envhi: false,
+        envlo: false,
+        orientation: false
+      }
     }
 
     this.workerData = []
@@ -67,7 +79,7 @@ class MainContainer extends Component {
         this.addTag(eventData.deviceId)
       } else {
         // update the tag with the payload data
-        this.updateTag(eventData.deviceId, eventData.eventType, eventData.data, tagIndex)
+        // this.updateTag(eventData.deviceId, eventData.eventType, eventData.data, tagIndex)
       }
     })
   }
@@ -152,12 +164,12 @@ class MainContainer extends Component {
 
       if (diff > this.activeThreshold) {
         // manually switch the class (color)
-        document.getElementById(`${obj.id}`).classList.add('status-inactive')
+        // document.getElementById(`${obj.id}`).classList.add('status-inactive')
       } else {
-        const classList = document.getElementById(`${obj.id}`).classList
-        if (classList.value.includes('status-inactive')) {
-          document.getElementById(`${obj.id}`).classList.remove('status-inactive')
-        }
+        // const classList = document.getElementById(`${obj.id}`).classList
+        // if (classList.value.includes('status-inactive')) {
+        //   document.getElementById(`${obj.id}`).classList.remove('status-inactive')
+        // }
       }
 
       // if the diff is > our threshold (set in constructor)
@@ -184,83 +196,102 @@ class MainContainer extends Component {
     // setTimeout(() => { this.initConnection() }, 5000)
   }
 
+  handleToggle (e) {
+    console.log('this = ', this)
+    console.log(e.target.innerHTML.toLowerCase())
+    const label = e.target.innerHTML.toLowerCase()
+    const toggles = this.state.toggles
+    toggles[label] = !toggles[label]
+    this.setState({ toggles })
+  }
+
+  onFilterChange (e) {
+    console.log(e.target.value)
+  }
+
   render () {
-    const allTags = this.state.activeTags.map((tag, index) => {
-      return (
-        <tr id={tag.id} className='tag-row status-good' key={index}>
-          <td id={`${tag.id}-id`} className='tag-id'>{tag.id}</td>
-          <td id={`${tag.id}-name`} className='tag-name'>{tag.name}</td>
-          <td id={`${tag.id}-site`} className='tag-site'>{tag.site}</td>
-          <td id={`${tag.id}-last-heard`} className='tag-last-heard' />
-          <td id={`${tag.id}-bad-bend`} className='tag-bad-bend' />
+    console.log('rendering...')
 
-          <td id={`${tag.id}-mic`} className='tag-mic' />
-          <td id={`${tag.id}-humid`} className='tag-humid' />
-          <td id={`${tag.id}-baro`} className='tag-baro' />
-          <td id={`${tag.id}-uv`} className='tag-uv' />
-
-          <td id={`${tag.id}-temp`} className='tag-temp' />
-          <td id={`${tag.id}-alt`} className='tag-alt' />
-
-          <td id={`${tag.id}-w`} className='tag-w' />
-          <td id={`${tag.id}-x`} className='tag-x' />
-          <td id={`${tag.id}-y`} className='tag-y' />
-          <td id={`${tag.id}-z`} className='tag-z' />
-        </tr>
-      )
+    const tags = this.state.activeTags.map((tag, index) => {
+      if (this.state.site === 'All Sites' || this.state.site === tag.site) {
+        return (
+          <TagRow
+            key={index}
+            id={tag.id}
+            site={tag.site}
+            toggles={this.state.toggles}
+          />
+        )
+      }
     })
 
     return (
       <div className='main-container'>
         <div className='nav-bar' >
           <img
-            src='img/light_hexagon.svg'
+            src='img/dark_hexagon.svg'
             alt='refresh'
             onClick={() => { this.killAllAndRevive() }}
           />
+
+          <div id='filter-toggle-menu'>
+            <div id='filter-menu'>
+              <select
+                className='filter-button'
+                onChange={this.onFilterChange}
+                value={this.state.site}
+              >
+                <option value='all-sites'>All Sites</option>
+                <option value='hcs'>HCS</option>
+                <option value='51-jay-st'>51 Jay Street</option>
+              </select>
+            </div>
+            <div id='toggle-menu'>
+              <div
+                className='toggle-button'
+                onClick={(event) => this.handleToggle(event)}
+                data-label='events'
+              >
+                Events
+              </div>
+              <div
+                className='toggle-button'
+                onClick={(event) => this.handleToggle(event)}
+                data-label='events'
+              >
+                Motions
+              </div>
+              <div
+                className='toggle-button'
+                onClick={(event) => this.handleToggle(event)}
+                data-label='events'
+              >
+                EnvHi
+              </div>
+              <div
+                className='toggle-button'
+                onClick={(event) => this.handleToggle(event)}
+                data-label='events'
+              >
+                EnvLo
+              </div>
+              <div
+                className='toggle-button'
+                onClick={(event) => this.handleToggle(event)}
+                data-label='events'
+              >
+                Orientation
+              </div>
+            </div>
+          </div>
+
           <form name='logout' action='/logout' method='post'>
             <button type='submit'>Logout</button>
           </form>
         </div>
-        <table className='device-list'>
-          <thead>
-            <tr
-              id='meta-header'
-              className={this.state.brokerConnection ? 'connected-bg' : 'disconnected-bg'}
-            >
-              <th id='meta-header-metadata' colSpan='4'>Metadata</th>
-              <th id='meta-header-event' colSpan='1'>event</th>
-              <th id='meta-header-envHi' colSpan='4'>envHi</th>
-              <th id='meta-header-envLo' colSpan='2'>envLo</th>
-              <th id='meta-header-orient' colSpan='4'>orient</th>
-            </tr>
-            <tr
-              id='header'
-            >
-              <th id='header-id'>id</th>
-              <th id='header-last-heard'>name</th>
-              <th id='header-site'>site</th>
-              <th id='header-last-heard'>last heard</th>
-              <th id='header-bad-bend'>bad_bend</th>
-
-              <th id='header-mic'>mic</th>
-              <th id='header-humid'>humid</th>
-              <th id='header-baro'>baro</th>
-              <th id='header-uv'>uv</th>
-
-              <th id='header-temp'>temp</th>
-              <th id='header-alt'>alt</th>
-
-              <th id='header-w'>w</th>
-              <th id='header-x'>x</th>
-              <th id='header-y'>y</th>
-              <th id='header-z'>z</th>
-            </tr>
-          </thead>
-          <tbody>
-            {allTags}
-          </tbody>
-        </table>
+        <div id='device-list'>
+          {tags}
+        </div>
       </div>
     )
   }

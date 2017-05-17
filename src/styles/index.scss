@@ -1,11 +1,5 @@
 @import 'base';
 
-$lightgrey: #D3D3D3;
-$darkgrey: #4B4B4B;
-$xtra-darkgrey: #252525;
-$connected: #00FF7F;
-$error: #FF6347;
-
 .main-container {
   overflow-x: auto;
   padding: 20px;
@@ -16,6 +10,7 @@ $error: #FF6347;
     display: flex;
 
     img {
+      color: black;
       cursor: pointer;
       margin-bottom: 1.5rem;
       width: 75px;
@@ -26,94 +21,35 @@ $error: #FF6347;
       border-style: none;
       color: $darkgrey;
     }
+  }  
+}
+
+.hide {
+  display: none;
+}
+
+#filter-toggle-menu {
+  display: flex;
+
+    .toggle-button {
+    background: black;
+    color: white;
+    border-radius: 10px;
+    font-size: 1rem;
+    height: 35px;
+    margin-left: 0.5rem;
+    padding: 9px;
+    text-align: center;
   }
 
-  table {
-    border-collapse: collapse;
-    border-bottom: 1px solid white;
+  #toggle-menu {
+    display: flex;
+  }
 
-    th, td {
-      border-right: 1px solid $darkgrey;
-      font-weight: 100;
-      padding: 10px;
-      text-align: center;
-    }
-
-    td {
-      font-weight: 100;
-      vertical-align: middle;
-    }
-
-    td:nth-child(4),
-    td:nth-child(5),
-    td:nth-child(9),
-    td:nth-child(11) {
-      border-right: 1px solid $lightgrey;
-    }
-
-    #meta-header {
-      color: black;
-
-      th {
-        border-right: 1px solid black;
-      }
-    }
-
-    #header {
-      background: $xtra-darkgrey;
-      border-bottom: 1px solid $lightgrey;
-      color: white;
-
-      th:nth-child(4),
-      th:nth-child(5),
-      th:nth-child(9),
-      th:nth-child(11) {
-        border-right: 1px solid $lightgrey;
-      }
-    }
-
-    tbody {
-
-      tr:hover {
-        background: $xtra-darkgrey;
-      }
-
-      // tr:nth-child(even) {
-      //   background: $xtra-darkgrey;
-      // }
-    }
-
-    
+  #filter-menu .filter-button {
+    @extend .toggle-button;
+    background: white;
+    border: solid 2px black;
+    color: black;
   }
 }
-
-// Status Colors
-.status-good {
-  color: $connected;
-}
-
-.status-error {
-  color: $error;
-}
-
-.status-inactive {
-  color: $lightgrey;
-}
-
-.connected-bg {
-  background: white;
-}
-
-.disconnected-bg {
-  background: $error;
-}
-
-// Column widths
-.tag-site { white-space: nowrap; }
-
-// #meta-header-metadata { width: 100px }
-// #meta-header-event { width: 300px }
-// #meta-header-envHi { width: 100px }
-// #meta-header-envLo { width: 150px }
-// #meta-header-orient { width: 150px }
-

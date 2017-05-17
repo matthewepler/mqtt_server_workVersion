@@ -1,0 +1,72 @@
+@import 'base';
+
+h4 {
+  font-size: 0.8rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  text-decoration: underline;
+}
+
+.tag-row {
+  border-top: solid 1px $lightgrey;
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  max-width: 100%;
+
+  .tag-section {
+    margin-right: 2.5rem;
+  }
+}
+
+.data-row {
+  display: flex;
+  margin-bottom: 5px; 
+
+  .data-row-label {
+    font-weight: 600;
+  }
+}
+
+#meta {
+  & div  { 
+    margin-bottom: 10px; 
+  }
+
+  #site {
+    font-size: 0.9rem;
+  }
+}
+
+#events-wrapper, #motions-wrapper {
+  flex-basis: 300px;
+
+  #events, #motions {
+    align-content: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+#orientation .data-row-label {
+  width: 40px;
+}
+
+#envHi .data-row-label {
+  width: 75px;
+}
+
+#envLo .data-row-label {
+  width: 65px;
+}
+
+#envHi, #envLo, #orientation {
+  font-size: 0.9rem;
+
+  & div {
+    margin-bottom: 5px;
+  }
+}
+
+
