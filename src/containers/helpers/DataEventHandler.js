@@ -34,8 +34,8 @@ function updateInnerHTML (idString, datum) {
   try {
     document.getElementById(idString).innerHTML = toTwoDecimalPlaces(datum)
   } catch (err) {
-    console.log(`could not update innerHTML for ${idString}`)
-    console.log(err)
+    // console.log(`could not update innerHTML for ${idString}`)
+    // console.log(err)
   }
 }
 

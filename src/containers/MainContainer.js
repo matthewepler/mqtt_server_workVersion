@@ -47,12 +47,12 @@ class MainContainer extends Component {
 
     // see 'updateTag()'
     this.eventActions = {
-      event: (deviceId, data, tagIndex) => DataEventHandler.handleEventEvent(deviceId, data, tagIndex, this.state.toggles),
-      orient: (deviceId, data, tagIndex) => DataEventHandler.handleOrientEvent(deviceId, data, tagIndex, this.state.toggles),
-      magno: (deviceId, data, tagIndex) => DataEventHandler.handleMagnoEvent(deviceId, data, tagIndex, this.state.toggles),
-      accel: (deviceId, data, tagIndex) => DataEventHandler.handleAccelEvent(deviceId, data, tagIndex, this.state.toggles),
-      gyro: (deviceId, data, tagIndex) => DataEventHandler.handleGyroEvent(deviceId, data, tagIndex, this.state.toggles),
-      other: (deviceId, data, tagIndex) => DataEventHandler.handleOtherEvent(deviceId, data, tagIndex, this.state.toggles)
+      event: (deviceId, data, tagIndex) => DataEventHandler.handleEventEvent(deviceId, data, tagIndex),
+      orient: (deviceId, data, tagIndex) => DataEventHandler.handleOrientEvent(deviceId, data, tagIndex),
+      magno: (deviceId, data, tagIndex) => DataEventHandler.handleMagnoEvent(deviceId, data, tagIndex),
+      accel: (deviceId, data, tagIndex) => DataEventHandler.handleAccelEvent(deviceId, data, tagIndex),
+      gyro: (deviceId, data, tagIndex) => DataEventHandler.handleGyroEvent(deviceId, data, tagIndex),
+      other: (deviceId, data, tagIndex) => DataEventHandler.handleOtherEvent(deviceId, data, tagIndex)
     }
 
     this.debug = false
@@ -227,17 +227,17 @@ class MainContainer extends Component {
   }
 
   handleTagIdFilter (e) {
-    if (this.state.tagId.length > 0 && e.target.value.length === 0) {
-      if (e.target.classList.contains('filter-button-on')) {
-        e.target.classList.remove('filter-button-on')
-      }
-    }
+    // if (this.state.tagId.length > 0 && e.target.value.length === 0) {
+    //   if (e.target.classList.contains('filter-button-on')) {
+    //     e.target.classList.remove('filter-button-on')
+    //   }
+    // }
 
-    if (this.state.tagId.length === 0 && e.target.value.length > 0) {
-      if (!e.target.classList.contains('filter-button-on')) {
-        e.target.classList.add('filter-button-on')
-      }
-    }
+    // if (this.state.tagId.length === 0 && e.target.value.length > 0) {
+    //   if (!e.target.classList.contains('filter-button-on')) {
+    //     e.target.classList.add('filter-button-on')
+    //   }
+    // }
 
     this.setState({ tagId: e.target.value })
   }
@@ -254,7 +254,13 @@ class MainContainer extends Component {
         return tag.id === this.state.tagId
       })
       if (tag) {
-        tags = <TagRow id={tag.id} site={tag.site} toggles={this.state.toggles} />
+        tags = (
+          <TagRow
+            id={tag.id}
+            name={tag.name}
+            site={tag.site}
+            toggles={this.state.toggles} />
+        )
       } else {
         tags = <h1>No Results Found</h1>
       }
@@ -280,6 +286,11 @@ class MainContainer extends Component {
 
     })
 
+    const tagIdFilterStyles = classnames({
+      'filter-button-off': true,
+      'filter-button-on': this.state.tagId.length > 0
+    })
+
     const siteFilterFieldStyles = classnames({
       'filter-button-on': this.state.site !== 'all sites'
     })
@@ -296,7 +307,7 @@ class MainContainer extends Component {
           <div id='filter-toggle-menu'>
             <div id='filter-menu'>
               <input
-                className='filter-button-off'
+                className={tagIdFilterStyles}
                 type='text'
                 value={this.state.tagId}
                 placeholder='tag id'
