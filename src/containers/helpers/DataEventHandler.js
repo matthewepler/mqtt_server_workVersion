@@ -4,7 +4,11 @@ const DataEventHandler = {
   },
 
   handleOrientEvent: (deviceId, data, tagIndex) => {
-    // console.log('handling Orient event')
+    for (let key in data.data[0]) { // read first packet in array only
+      if (key !== 'timestamp') {
+        updateInnerHTML(`${deviceId}-orient-${key.toLowerCase()}`, data.data[0][key])
+      }
+    }
   },
 
   handleMagnoEvent: (deviceId, data, tagIndex) => {
@@ -21,20 +25,28 @@ const DataEventHandler = {
 
   handleOtherEvent: (deviceId, data, tagIndex) => {
     for (let key in data.data) {
-      let datum
-      if (data.data[key].indexOf('.') > 0) {
-        let splitString = data.data[key].split('.')
-        splitString[1] = splitString[1].slice(0, 2)
-        datum = splitString.join('.')
-      } else {
-        datum = data.data[key]
-      }
-      try {
-        document.getElementById(`${deviceId}-${key}`).innerHTML = datum
-      } catch (err) {
-        console.log(`could not update innerHTML for ${deviceId}-${key}`)
-      }
+      updateInnerHTML(`${deviceId}-${key}`, data.data[key])
     }
+  }
+}
+
+function updateInnerHTML (idString, datum) {
+  try {
+    document.getElementById(idString).innerHTML = toTwoDecimalPlaces(datum)
+  } catch (err) {
+    console.log(`could not update innerHTML for ${idString}`)
+    console.log(err)
+  }
+}
+
+function toTwoDecimalPlaces (numString) {
+  numString = String(numString)
+  if (numString.indexOf('.') > 0) {
+    let splitString = numString.split('.')
+    splitString[1] = splitString[1].slice(0, 2)
+    return splitString.join('.')
+  } else {
+    return numString
   }
 }
 

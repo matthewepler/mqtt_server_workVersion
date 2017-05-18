@@ -103,19 +103,19 @@ function TagRow (props) {
           <h4>Orientation</h4>
           <div className='data-row'>
             <div className='data-row-label'>W:</div>
-            <div className='data-row-data'> - </div>
+            <div id={`${props.id}-orient-w`} className='data-row-data'> - </div>
           </div>
           <div className='data-row'>
             <div className='data-row-label'>X:</div>
-            <div className='data-row-data'> - </div>
+            <div id={`${props.id}-orient-x`} className='data-row-data'> - </div>
           </div>
           <div className='data-row'>
             <div className='data-row-label'>Y:</div>
-            <div className='data-row-data'> - </div>
+            <div id={`${props.id}-orient-y`} className='data-row-data'> - </div>
           </div>
           <div className='data-row'>
             <div className='data-row-label'>Z:</div>
-            <div className='data-row-data'> - </div>
+            <div id={`${props.id}-orient-z`} className='data-row-data'> - </div>
           </div>
         </div>
       }

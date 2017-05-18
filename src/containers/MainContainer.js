@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import sheetsu from 'sheetsu-node'
 import io from 'socket.io-client'
+import classnames from 'classnames'
 
 // components
 import TagRow from '../components/TagRow'
@@ -21,12 +22,13 @@ class MainContainer extends Component {
       dbConnected: false,
       site: 'all sites',
       toggles: {
-        events: true,
-        motions: true,
-        envhi: true,
-        envlo: true,
+        events: false,
+        motions: false,
+        envhi: false,
+        envlo: false,
         orientation: true,
-        meta: true
+        accel: true,
+        meta: false
       },
       tagId: ''
     }
@@ -45,12 +47,12 @@ class MainContainer extends Component {
 
     // see 'updateTag()'
     this.eventActions = {
-      event: (deviceId, data, tagIndex) => DataEventHandler.handleEventEvent(deviceId, data, tagIndex),
-      orient: (deviceId, data, tagIndex) => DataEventHandler.handleOrientEvent(deviceId, data, tagIndex),
-      magno: (deviceId, data, tagIndex) => DataEventHandler.handleMagnoEvent(deviceId, data, tagIndex),
-      accel: (deviceId, data, tagIndex) => DataEventHandler.handleAccelEvent(deviceId, data, tagIndex),
-      gyro: (deviceId, data, tagIndex) => DataEventHandler.handleGyroEvent(deviceId, data, tagIndex),
-      other: (deviceId, data, tagIndex) => DataEventHandler.handleOtherEvent(deviceId, data, tagIndex)
+      event: (deviceId, data, tagIndex) => DataEventHandler.handleEventEvent(deviceId, data, tagIndex, this.state.toggles),
+      orient: (deviceId, data, tagIndex) => DataEventHandler.handleOrientEvent(deviceId, data, tagIndex, this.state.toggles),
+      magno: (deviceId, data, tagIndex) => DataEventHandler.handleMagnoEvent(deviceId, data, tagIndex, this.state.toggles),
+      accel: (deviceId, data, tagIndex) => DataEventHandler.handleAccelEvent(deviceId, data, tagIndex, this.state.toggles),
+      gyro: (deviceId, data, tagIndex) => DataEventHandler.handleGyroEvent(deviceId, data, tagIndex, this.state.toggles),
+      other: (deviceId, data, tagIndex) => DataEventHandler.handleOtherEvent(deviceId, data, tagIndex, this.state.toggles)
     }
 
     this.debug = false
@@ -138,7 +140,11 @@ class MainContainer extends Component {
 
     // update the 'last heard' timestamp so we know if it's active
     this.heartbeats[tagIndex].lastHeard = Date.now()
-    document.getElementById(`${deviceId}-last-heard-data`).innerHTML = getCurrTimeString()
+    try { // filtering can cause errors since it removes tags from DOM
+      document.getElementById(`${deviceId}-last-heard-data`).innerHTML = getCurrTimeString()
+    } catch (err) {
+      // ignore
+    }
 
     if (this.eventActions[eventType]) {
       this.eventActions[eventType](deviceId, data, tagIndex)
@@ -167,11 +173,19 @@ class MainContainer extends Component {
       const diff = Date.now() - new Date(obj.lastHeard).getTime()
 
       if (diff > this.activeThreshold) {
-        document.getElementById(`${obj.id}-tag-row`).classList.add('status-inactive')
+        try { // when filtering is on, the tag may not appear in the DOM
+          document.getElementById(`${obj.id}-tag-row`).classList.add('status-inactive')
+        } catch (err) {
+          // ignore
+        }
       } else {
-        const classList = document.getElementById(`${obj.id}-tag-row`).classList
-        if (classList.value.includes('status-inactive')) {
-          document.getElementById(`${obj.id}-tag-row`).classList.remove('status-inactive')
+        try {
+          const classList = document.getElementById(`${obj.id}-tag-row`).classList
+          if (classList.value.includes('status-inactive')) {
+            document.getElementById(`${obj.id}-tag-row`).classList.remove('status-inactive')
+          }
+        } catch (err) {
+
         }
       }
 
@@ -209,15 +223,6 @@ class MainContainer extends Component {
   }
 
   handleSiteFilterChange (e) {
-    if (e.target.value !== 'all-sites') {
-      if (!e.target.classList.contains('filter-button-on')) {
-        e.target.classList.add('filter-button-on')
-      }
-    } else {
-      if (e.target.classList.contains('filter-button-on')) {
-        e.target.classList.remove('filter-button-on')
-      }
-    }
     this.setState({ site: e.target.value })
   }
 
@@ -271,6 +276,14 @@ class MainContainer extends Component {
       })
     }
 
+    const toggleButtonStyles = classnames({
+
+    })
+
+    const siteFilterFieldStyles = classnames({
+      'filter-button-on': this.state.site !== 'all sites'
+    })
+
     return (
       <div className='main-container'>
         <div className='nav-bar' >
@@ -290,10 +303,11 @@ class MainContainer extends Component {
                 onChange={(event) => this.handleTagIdFilter(event)}
               />
               <select
+                className={siteFilterFieldStyles}
                 onChange={(event) => this.handleSiteFilterChange(event)}
                 value={this.state.site}
               >
-                <option value='all-sites'>all sites</option>
+                <option value='all sites'>all sites</option>
                 <option value='hcs'>HCS</option>
                 <option value='51-jay-st'>51 Jay Street</option>
               </select>
