@@ -120,6 +120,44 @@ function TagRow (props) {
         </div>
       }
 
+      {/* Accel */}
+      { props.toggles.accel &&
+        <div className='accel tag-section'>
+          <h4>Accel</h4>
+          <div className='data-row'>
+            <div className='data-row-label'>X:</div>
+            <div id={`${props.id}-accel-x`} className='data-row-data'> - </div>
+          </div>
+          <div className='data-row'>
+            <div className='data-row-label'>Y:</div>
+            <div id={`${props.id}-accel-y`} className='data-row-data'> - </div>
+          </div>
+          <div className='data-row'>
+            <div className='data-row-label'>Z:</div>
+            <div id={`${props.id}-accel-z`} className='data-row-data'> - </div>
+          </div>
+        </div>
+      }
+
+      {/* Magno */}
+      { props.toggles.magno &&
+        <div className='magno tag-section'>
+          <h4>Magno</h4>
+          <div className='data-row'>
+            <div className='data-row-label'>X:</div>
+            <div id={`${props.id}-magno-x`} className='data-row-data'> - </div>
+          </div>
+          <div className='data-row'>
+            <div className='data-row-label'>Y:</div>
+            <div id={`${props.id}-magno-y`} className='data-row-data'> - </div>
+          </div>
+          <div className='data-row'>
+            <div className='data-row-label'>Z:</div>
+            <div id={`${props.id}-magno-z`} className='data-row-data'> - </div>
+          </div>
+        </div>
+      }
+
       {/* Meta */}
       { props.toggles.meta &&
         <div className='meta tag-section'>

@@ -5,6 +5,7 @@ import classnames from 'classnames'
 
 // components
 import TagRow from '../components/TagRow'
+import ToggleButton from '../components/ToggleButton'
 
 // helpers
 import { getCurrTimeString } from './helpers/utils'
@@ -28,6 +29,7 @@ class MainContainer extends Component {
         envlo: false,
         orientation: true,
         accel: true,
+        magno: true,
         meta: false
       },
       tagId: ''
@@ -47,12 +49,12 @@ class MainContainer extends Component {
 
     // see 'updateTag()'
     this.eventActions = {
-      event: (deviceId, data, tagIndex) => DataEventHandler.handleEventEvent(deviceId, data, tagIndex),
-      orient: (deviceId, data, tagIndex) => DataEventHandler.handleOrientEvent(deviceId, data, tagIndex),
-      magno: (deviceId, data, tagIndex) => DataEventHandler.handleMagnoEvent(deviceId, data, tagIndex),
-      accel: (deviceId, data, tagIndex) => DataEventHandler.handleAccelEvent(deviceId, data, tagIndex),
-      gyro: (deviceId, data, tagIndex) => DataEventHandler.handleGyroEvent(deviceId, data, tagIndex),
-      other: (deviceId, data, tagIndex) => DataEventHandler.handleOtherEvent(deviceId, data, tagIndex)
+      event: (deviceId, data) => DataEventHandler.handleEventEvent(deviceId, data),
+      orient: (deviceId, data) => DataEventHandler.handleOrientEvent(deviceId, data),
+      accel: (deviceId, data) => DataEventHandler.handleAccelEvent(deviceId, data),
+      magno: (deviceId, data) => DataEventHandler.handleMagnoEvent(deviceId, data),
+      gyro: (deviceId, data) => DataEventHandler.handleGyroEvent(deviceId, data),
+      other: (deviceId, data) => DataEventHandler.handleOtherEvent(deviceId, data)
     }
 
     this.debug = false
@@ -282,6 +284,21 @@ class MainContainer extends Component {
       })
     }
 
+    let toggleButtons = []
+    let key = 0
+    for (let item in this.state.toggles) {
+      console.log('state says ', item, this.state.toggles[item])
+      toggleButtons.push(
+        <ToggleButton
+          toggle={this.state.toggles[item]}
+          title={item}
+          key={key + 1}
+          handleClick={(event) => this.handleToggle(event)}
+        />
+      )
+      key += 1
+    }
+
     const tagIdFilterStyles = classnames({
       'filter-button-off': true,
       'filter-button-on': this.state.tagId.length > 0
@@ -320,42 +337,7 @@ class MainContainer extends Component {
               </select>
             </div>
             <div id='toggle-menu'>
-              <div
-                className={this.state.toggles.events ? 'toggle-button' : 'toggle-button toggle-button-off'}
-                onClick={(event) => this.handleToggle(event)}
-              >
-                Events
-              </div>
-              <div
-                className={this.state.toggles.motions ? 'toggle-button' : 'toggle-button toggle-button-off'}
-                onClick={(event) => this.handleToggle(event)}
-              >
-                Motions
-              </div>
-              <div
-                className={this.state.toggles.envhi ? 'toggle-button' : 'toggle-button toggle-button-off'}
-                onClick={(event) => this.handleToggle(event)}
-              >
-                EnvHi
-              </div>
-              <div
-                className={this.state.toggles.envlo ? 'toggle-button' : 'toggle-button toggle-button-off'}
-                onClick={(event) => this.handleToggle(event)}
-              >
-                EnvLo
-              </div>
-              <div
-                className={this.state.toggles.orientation ? 'toggle-button' : 'toggle-button toggle-button-off'}
-                onClick={(event) => this.handleToggle(event)}
-              >
-                Orientation
-              </div>
-              <div
-                className={this.state.toggles.meta ? 'toggle-button' : 'toggle-button toggle-button-off'}
-                onClick={(event) => this.handleToggle(event)}
-              >
-                Meta
-              </div>
+              {toggleButtons}
             </div>
           </div>
 

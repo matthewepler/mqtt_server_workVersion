@@ -1,31 +1,38 @@
 const DataEventHandler = {
-  handleEventEvent: (deviceId, data, tagIndex) => {
+  handleEventEvent: (deviceId, data) => {
     // console.log('handling Event event')
   },
 
-  handleOrientEvent: (deviceId, data, tagIndex) => {
-    for (let key in data.data[0]) { // read first packet in array only
-      if (key !== 'timestamp') {
-        updateInnerHTML(`${deviceId}-orient-${key.toLowerCase()}`, data.data[0][key])
-      }
-    }
+  handleOrientEvent: (deviceId, data) => {
+    typicalAxialEvent(deviceId, data.data[0], 'orient')
   },
 
-  handleMagnoEvent: (deviceId, data, tagIndex) => {
-    // console.log('handling Magno event')
+  handleMagnoEvent: (deviceId, data) => {
+    typicalAxialEvent(deviceId, data.data[0], 'magno')
   },
 
-  handleAccelEvent: (deviceId, data, tagIndex) => {
-    // console.log('handling Accel event')
+  handleAccelEvent: (deviceId, data) => {
+    typicalAxialEvent(deviceId, data.data[0], 'accel')
   },
 
-  handleGyroEvent: (deviceId, data, tagIndex) => {
-    // console.log('handling Gryo event')
+  handleGyroEvent: (deviceId, data) => {
+
   },
 
-  handleOtherEvent: (deviceId, data, tagIndex) => {
+  handleOtherEvent: (deviceId, data) => {
     for (let key in data.data) {
       updateInnerHTML(`${deviceId}-${key}`, data.data[key])
+    }
+  }
+}
+
+function typicalAxialEvent (deviceId, data, typeString) {
+  for (let key in data) {
+    if (key !== 'timestamp') {
+      let elementIdStr = `${deviceId}-`
+      if (typeString) elementIdStr += `${typeString}-`
+      elementIdStr += `${key.toLowerCase()}`
+      updateInnerHTML(elementIdStr, data[key])
     }
   }
 }
