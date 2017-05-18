@@ -7,6 +7,7 @@ import TagRow from '../components/TagRow'
 
 // helpers
 import { getCurrTimeString } from './helpers/utils'
+import DataEventHandler from './helpers/DataEventHandler'
 
 // styles
 import '../styles/index.css'
@@ -130,6 +131,21 @@ class MainContainer extends Component {
 
     console.log('New event - ', eventType)
 
+    const eventActions = {
+      event: (deviceId, data, tagIndex) => DataEventHandler.handleEventEvent(deviceId, data, tagIndex),
+      orient: (deviceId, data, tagIndex) => DataEventHandler.handleOrientEvent(deviceId, data, tagIndex),
+      magno: (deviceId, data, tagIndex) => DataEventHandler.handleMagnoEvent(deviceId, data, tagIndex),
+      accel: (deviceId, data, tagIndex) => DataEventHandler.handleAccelEvent(deviceId, data, tagIndex),
+      gyro: (deviceId, data, tagIndex) => DataEventHandler.handleGyroEvent(deviceId, data, tagIndex)
+    }
+
+    if (eventActions[eventType]) {
+      console.log('calling ', eventActions[eventType])
+      eventActions[eventType]()
+    } else {
+      DataEventHandler.handleOtherEvent(deviceId, data, tagIndex)
+    }
+
     if (eventType === 'event') {
       // only bad_bend exists right now. put logic here in future for other types
       // document.getElementById(`${deviceId}-bad-bend`).innerHTML = data.data.data
@@ -141,22 +157,22 @@ class MainContainer extends Component {
       //   }
       // }
     } else {
-      console.log(data.data)
-      for (let key in data.data) {
-        let datum
-        if (data.data[key].indexOf('.') > 0) {
-          let splitString = data.data[key].split('.')
-          splitString[1] = splitString[1].slice(0, 2)
-          datum = splitString.join('.')
-        } else {
-          datum = data.data[key]
-        }
-        try {
-          document.getElementById(`${deviceId}-${key}`).innerHTML = datum
-        } catch (err) {
-          console.log(`could not update innerHTML for ${deviceId}-${key}`)
-        }
-      }
+      // console.log(data.data)
+      // for (let key in data.data) {
+      //   let datum
+      //   if (data.data[key].indexOf('.') > 0) {
+      //     let splitString = data.data[key].split('.')
+      //     splitString[1] = splitString[1].slice(0, 2)
+      //     datum = splitString.join('.')
+      //   } else {
+      //     datum = data.data[key]
+      //   }
+      //   try {
+      //     document.getElementById(`${deviceId}-${key}`).innerHTML = datum
+      //   } catch (err) {
+      //     console.log(`could not update innerHTML for ${deviceId}-${key}`)
+      //   }
+      // }
     }
 
     // // check for name and site in DB if it's not already known
