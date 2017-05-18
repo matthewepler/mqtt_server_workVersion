@@ -17,7 +17,7 @@ h4 {
 
   .info {
     max-width: 100px;
-    
+
     & div  { 
       margin-bottom: 10px; 
     }
@@ -66,8 +66,10 @@ h4 {
 
 
 
-.orientation .data-row-label {
-  width: 40px;
+.orientation, .accel {
+  .data-row-label {
+    width: 40px;
+  }
 }
 
 .envHi .data-row-label {
@@ -82,7 +84,7 @@ h4 {
   width: 50px;
 }
 
-.envHi, .envLo, .orientation, .meta {
+.envHi, .envLo, .orientation, .meta, .accel, .magno {
   font-size: 0.9rem;
 
   & div {
