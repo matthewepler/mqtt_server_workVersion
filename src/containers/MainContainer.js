@@ -25,7 +25,8 @@ class MainContainer extends Component {
         motions: true,
         envhi: true,
         envlo: true,
-        orientation: true
+        orientation: true,
+        meta: true
       },
       tagId: ''
     }
@@ -332,6 +333,13 @@ class MainContainer extends Component {
                 data-label='events'
               >
                 Orientation
+              </div>
+              <div
+                className='toggle-button'
+                onClick={(event) => this.handleToggle(event)}
+                data-label='events'
+              >
+                Meta
               </div>
             </div>
           </div>

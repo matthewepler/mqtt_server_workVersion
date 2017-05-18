@@ -1,22 +1,22 @@
 const DataEventHandler = {
   handleEventEvent: (deviceId, data, tagIndex) => {
-    console.log('handling Event event')
+    // console.log('handling Event event')
   },
 
   handleOrientEvent: (deviceId, data, tagIndex) => {
-    console.log('handling Orient event')
+    // console.log('handling Orient event')
   },
 
   handleMagnoEvent: (deviceId, data, tagIndex) => {
-    console.log('handling Magno event')
+    // console.log('handling Magno event')
   },
 
   handleAccelEvent: (deviceId, data, tagIndex) => {
-    console.log('handling Accel event')
+    // console.log('handling Accel event')
   },
 
   handleGyroEvent: (deviceId, data, tagIndex) => {
-    console.log('handling Gryo event')
+    // console.log('handling Gryo event')
   },
 
   handleOtherEvent: (deviceId, data, tagIndex) => {

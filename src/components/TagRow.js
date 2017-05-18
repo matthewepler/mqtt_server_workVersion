@@ -9,9 +9,9 @@ import '../styles/TagRow.css'
 function TagRow (props) {
   return (
     <div id={`${props.id}-tag-row`} className='tag-row'>
-      {/* Meta */}
-      <div className='meta tag-section'>
-        <h4>Meta</h4>
+      {/* Info */}
+      <div className='info tag-section'>
+        <h4>Info</h4>
         <div id={`${props.id}-tagId`} className='tagId'>{props.id}</div>
         <div id={`${props.id}-name`} className='name'>{props.name}</div>
         <div id={`${props.id}-site`} className='site'>{props.site}</div>
@@ -20,7 +20,7 @@ function TagRow (props) {
       {/* Last Heard */}
       <div className='last-heard tag-section'>
         <h4>Last Heard</h4>
-        <div id={`${props.id}-last-heard-data`} className='last-heard-data'>99:99</div>
+        <div id={`${props.id}-last-heard-data`} className='last-heard-data'> - </div>
       </div>
 
       {/* Events */}
@@ -65,15 +65,15 @@ function TagRow (props) {
           <h4>EnvHi</h4>
           <div className='data-row'>
             <div className='data-row-label'>Mic.</div>
-            <div id={`${props.id}-mic`} className='data-row-data'>9999</div>
+            <div id={`${props.id}-mic`} className='data-row-data'> - </div>
           </div>
           <div className='data-row'>
             <div className='data-row-label'>Humid.</div>
-            <div id={`${props.id}-humid`} className='data-row-data'>999</div>
+            <div id={`${props.id}-humid`} className='data-row-data'> - </div>
           </div>
           <div className='data-row'>
             <div className='data-row-label'>Baro.</div>
-            <div id={`${props.id}-baro`} className='data-row-data'>9999</div>
+            <div id={`${props.id}-baro`} className='data-row-data'> - </div>
           </div>
           <div className='data-row'>
             <div className='data-row-label'>UV</div>
@@ -88,11 +88,11 @@ function TagRow (props) {
           <h4>EnvLo</h4>
           <div className='data-row'>
             <div className='data-row-label'>Temp.</div>
-            <div id={`${props.id}-temp`} className='data-row-data'>999</div>
+            <div id={`${props.id}-temp`} className='data-row-data'> - </div>
           </div>
           <div className='data-row'>
             <div className='data-row-label'>Alt.</div>
-            <div id={`${props.id}-alt`} className='data-row-data'>9999.99</div>
+            <div id={`${props.id}-alt`} className='data-row-data'> - </div>
           </div>
         </div>
       }
@@ -103,19 +103,38 @@ function TagRow (props) {
           <h4>Orientation</h4>
           <div className='data-row'>
             <div className='data-row-label'>W:</div>
-            <div className='data-row-data'>999</div>
+            <div className='data-row-data'> - </div>
           </div>
           <div className='data-row'>
             <div className='data-row-label'>X:</div>
-            <div className='data-row-data'>999</div>
+            <div className='data-row-data'> - </div>
           </div>
           <div className='data-row'>
             <div className='data-row-label'>Y:</div>
-            <div className='data-row-data'>999</div>
+            <div className='data-row-data'> - </div>
           </div>
           <div className='data-row'>
             <div className='data-row-label'>Z:</div>
-            <div className='data-row-data'>999</div>
+            <div className='data-row-data'> - </div>
+          </div>
+        </div>
+      }
+
+      {/* Meta */}
+      { props.toggles.meta &&
+        <div className='meta tag-section'>
+          <h4>Meta</h4>
+          <div className='data-row'>
+            <div className='data-row-label'>Batt:</div>
+            <div id={`${props.id}-batt`} className='data-row-data'> - </div>
+          </div>
+          <div className='data-row'>
+            <div className='data-row-label'>Ext:</div>
+            <div id={`${props.id}-ext`} className='data-row-data'> - </div>
+          </div>
+          <div className='data-row'>
+            <div className='data-row-label'>Ver:</div>
+            <div id={`${props.id}-ver`} className='data-row-data'> - </div>
           </div>
         </div>
       }

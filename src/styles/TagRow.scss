@@ -15,7 +15,9 @@ h4 {
   padding-bottom: 25px;
   max-width: 100%;
 
-  .meta {
+  .info {
+    max-width: 100px;
+    
     & div  { 
       margin-bottom: 10px; 
     }
@@ -37,7 +39,9 @@ h4 {
   }
 
   .events-wrapper, .motions-wrapper {
-    flex-basis: 300px;
+    flex-basis: 100px;
+    flex-grow: 1;
+    max-width: 300px;
 
     .events, .motions {
       align-content: flex-start;
@@ -48,7 +52,7 @@ h4 {
 }
 
 .tag-section {
-    margin-right: 2.5rem;
+    margin-right: 4rem;
   }
 
 .data-row {
@@ -74,7 +78,11 @@ h4 {
   width: 65px;
 }
 
-.envHi, .envLo, .orientation {
+.meta .data-row-label {
+  width: 50px;
+}
+
+.envHi, .envLo, .orientation, .meta {
   font-size: 0.9rem;
 
   & div {
