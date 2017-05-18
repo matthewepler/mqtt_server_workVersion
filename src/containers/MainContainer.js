@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import sheetsu from 'sheetsu-node'
 import io from 'socket.io-client'
-import classnames from 'classnames'
 
 // components
 import TagRow from '../components/TagRow'
@@ -129,31 +128,44 @@ class MainContainer extends Component {
     this.heartbeats[tagIndex].lastHeard = Date.now()
     document.getElementById(`${deviceId}-last-heard-data`).innerHTML = getCurrTimeString()
 
-    // if (eventType === 'event') {
-    //   // only bad_bend exists right now. put logic here in future for other types
-    //   document.getElementById(`${deviceId}-bad-bend`).innerHTML = data.data.data
-    // } else if (eventType === 'orient') {
-    //   // we expecte <= 30 objects but only need to use 1 for an update
-    //   for (let key in data.data[0]) {
-    //     if (key !== 'timestamp') {
-    //       document.getElementById(`${deviceId}-${key}`).innerHTML = data.data[0][key]
-    //     }
-    //   }
-    // } else {
-    //   for (let key in data.data) {
-    //     document.getElementById(`${deviceId}-${key}`).innerHTML = data.data[key]
-    //   }
-    // }
+    console.log('New event - ', eventType)
+
+    if (eventType === 'event') {
+      // only bad_bend exists right now. put logic here in future for other types
+      // document.getElementById(`${deviceId}-bad-bend`).innerHTML = data.data.data
+    } else if (eventType === 'orient' || eventType === 'magno' || eventType === 'accel' || eventType === 'gyro') {
+      // we expecte <= 30 objects but only need to use 1 for an update
+      // for (let key in data.data[0]) {
+      //   if (key !== 'timestamp') {
+      //     document.getElementById(`${deviceId}-${key}`).innerHTML = data.data[0][key]
+      //   }
+      // }
+    } else {
+      console.log(data.data)
+      for (let key in data.data) {
+        let datum
+        if (data.data[key].indexOf('.') > 0) {
+          let splitString = data.data[key].split('.')
+          splitString[1] = splitString[1].slice(0, 2)
+          datum = splitString.join('.')
+        } else {
+          datum = data.data[key]
+        }
+        try {
+          document.getElementById(`${deviceId}-${key}`).innerHTML = datum
+        } catch (err) {
+          console.log(`could not update innerHTML for ${deviceId}-${key}`)
+        }
+      }
+    }
 
     // // check for name and site in DB if it's not already known
     const activeTags = this.state.activeTags
     if (activeTags[tagIndex].name === 'unknown' && this.state.dbConnected) {
-      console.log('looking for worker details')
       const worker = this.workerData.find((worker) => {
         return worker.id === deviceId
       })
       if (worker) {
-        console.log('found worker')
         activeTags[tagIndex].name = worker.name
         activeTags[tagIndex].site = worker.site
         this.setState({ activeTags })

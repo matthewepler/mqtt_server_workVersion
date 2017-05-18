@@ -65,19 +65,19 @@ function TagRow (props) {
           <h4>EnvHi</h4>
           <div className='data-row'>
             <div className='data-row-label'>Mic.</div>
-            <div className='data-row-data'>9999</div>
+            <div id={`${props.id}-mic`} className='data-row-data'>9999</div>
           </div>
           <div className='data-row'>
             <div className='data-row-label'>Humid.</div>
-            <div className='data-row-data'>999</div>
+            <div id={`${props.id}-humid`} className='data-row-data'>999</div>
           </div>
           <div className='data-row'>
             <div className='data-row-label'>Baro.</div>
-            <div className='data-row-data'>9999</div>
+            <div id={`${props.id}-baro`} className='data-row-data'>9999</div>
           </div>
           <div className='data-row'>
             <div className='data-row-label'>UV</div>
-            <div className='data-row-data'>N/A</div>
+            <div id={`${props.id}-uv`} className='data-row-data'>N/A</div>
           </div>
         </div>
       }
@@ -88,11 +88,11 @@ function TagRow (props) {
           <h4>EnvLo</h4>
           <div className='data-row'>
             <div className='data-row-label'>Temp.</div>
-            <div className='data-row-data'>999</div>
+            <div id={`${props.id}-temp`} className='data-row-data'>999</div>
           </div>
           <div className='data-row'>
             <div className='data-row-label'>Alt.</div>
-            <div className='data-row-data'>9999.99</div>
+            <div id={`${props.id}-alt`} className='data-row-data'>9999.99</div>
           </div>
         </div>
       }
