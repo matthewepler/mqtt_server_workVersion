@@ -14,46 +14,46 @@ h4 {
   padding-top: 25px;
   padding-bottom: 25px;
   max-width: 100%;
-
-  .info {
-    max-width: 100px;
-
-    & div  { 
-      margin-bottom: 10px; 
-    }
-
-    .tagId {}
-    .name {}
-    .site {
-      background: $lightgrey;
-      border-radius: 5px;
-      display: inline-block;
-      font-size: 0.9rem;
-      padding: 5px;
-      max-width: 100%;
-    }
-  }
-
-  .last-heard {
-    .last-heard-data {}
-  }
-
-  .events-wrapper, .motions-wrapper {
-    flex-basis: 100px;
-    flex-grow: 1;
-    max-width: 300px;
-
-    .events, .motions {
-      align-content: flex-start;
-      display: flex;
-      flex-wrap: wrap;
-    }
-  }
 }
 
 .tag-section {
-    margin-right: 4rem;
+  margin-right: 4rem;
+}
+
+.info {
+  max-width: 100px;
+
+  & div  { 
+    margin-bottom: 10px; 
   }
+
+  .tagId {}
+  .name {}
+  .site {
+    background: $lightgrey;
+    border-radius: 5px;
+    display: inline-block;
+    font-size: 0.9rem;
+    padding: 5px;
+    max-width: 100%;
+  }
+}
+
+.last-heard {
+  .last-heard-data {}
+}
+
+.events-wrapper, .motions-wrapper {
+  flex-basis: 100px;
+  flex-grow: 1;
+  max-width: 300px;
+
+  .events, .motions {
+    align-content: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
 
 .data-row {
   display: flex;
@@ -64,11 +64,9 @@ h4 {
   }
 }
 
-
-
-.orientation, .accel {
+.orientation, .accel, .magno, .gyro {
   .data-row-label {
-    width: 40px;
+    width: 30px;
   }
 }
 
@@ -84,7 +82,7 @@ h4 {
   width: 50px;
 }
 
-.envHi, .envLo, .orientation, .meta, .accel, .magno {
+.envHi, .envLo, .orientation, .meta, .accel, .magno, .gyro {
   font-size: 0.9rem;
 
   & div {
@@ -92,4 +90,16 @@ h4 {
   }
 }
 
+.single-row {
+  display: flex;
+  max-width: 500px;
 
+  & div {
+    margin-right: 25px;
+    max-width: 150px;
+  }
+}
+
+.expand-max-width {
+  max-width: 500px;
+}

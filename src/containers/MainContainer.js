@@ -27,9 +27,10 @@ class MainContainer extends Component {
         motions: false,
         envhi: false,
         envlo: false,
-        orientation: true,
-        accel: true,
-        magno: true,
+        orientation: false,
+        accel: false,
+        magno: false,
+        gyro: false,
         meta: false
       },
       tagId: ''
@@ -52,8 +53,8 @@ class MainContainer extends Component {
       event: (deviceId, data) => DataEventHandler.handleEventEvent(deviceId, data),
       orient: (deviceId, data) => DataEventHandler.handleOrientEvent(deviceId, data),
       accel: (deviceId, data) => DataEventHandler.handleAccelEvent(deviceId, data),
-      magno: (deviceId, data) => DataEventHandler.handleMagnoEvent(deviceId, data),
       gyro: (deviceId, data) => DataEventHandler.handleGyroEvent(deviceId, data),
+      magno: (deviceId, data) => DataEventHandler.handleMagnoEvent(deviceId, data),
       other: (deviceId, data) => DataEventHandler.handleOtherEvent(deviceId, data)
     }
 
@@ -287,7 +288,6 @@ class MainContainer extends Component {
     let toggleButtons = []
     let key = 0
     for (let item in this.state.toggles) {
-      console.log('state says ', item, this.state.toggles[item])
       toggleButtons.push(
         <ToggleButton
           toggle={this.state.toggles[item]}

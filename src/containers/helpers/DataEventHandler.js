@@ -16,7 +16,7 @@ const DataEventHandler = {
   },
 
   handleGyroEvent: (deviceId, data) => {
-
+    typicalAxialEvent(deviceId, data.data[0], 'gyro')
   },
 
   handleOtherEvent: (deviceId, data) => {

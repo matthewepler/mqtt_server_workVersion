@@ -1,4 +1,5 @@
 import React from 'react'
+import classnames from 'classnames'
 
 // components
 import Pill from '../components/Pill'
@@ -7,14 +8,34 @@ import Pill from '../components/Pill'
 import '../styles/TagRow.css'
 
 function TagRow (props) {
+  let solo = true
+  for (let key in props.toggles) {
+    if (props.toggles[key]) {
+      solo = false
+      break
+    }
+  }
+
+  const expandMaxWidth = classnames({
+    'tag-section': true,
+    'info': true,
+    'expand-max-width': solo
+  })
+
+  const infoStyle = classnames({
+    'single-row': solo
+  })
+
   return (
-    <div id={`${props.id}-tag-row`} className='tag-row'>
+    <div id={`${props.id}-tag-row`} className={'tag-row'}>
       {/* Info */}
-      <div className='info tag-section'>
+      <div className={expandMaxWidth}>
         <h4>Info</h4>
-        <div id={`${props.id}-tagId`} className='tagId'>{props.id}</div>
-        <div id={`${props.id}-name`} className='name'>{props.name}</div>
-        <div id={`${props.id}-site`} className='site'>{props.site}</div>
+        <div className={infoStyle}>
+          <div id={`${props.id}-tagId`} className='tagId'>{props.id}</div>
+          <div id={`${props.id}-name`} className='name'>{props.name}</div>
+          <div id={`${props.id}-site`} className='site'>{props.site}</div>
+        </div>
       </div>
 
       {/* Last Heard */}
@@ -135,6 +156,25 @@ function TagRow (props) {
           <div className='data-row'>
             <div className='data-row-label'>Z:</div>
             <div id={`${props.id}-accel-z`} className='data-row-data'> - </div>
+          </div>
+        </div>
+      }
+
+      {/* Gyro */}
+      { props.toggles.gyro &&
+        <div className='gyro tag-section'>
+          <h4>Gyro</h4>
+          <div className='data-row'>
+            <div className='data-row-label'>X:</div>
+            <div id={`${props.id}-gyro-x`} className='data-row-data'> - </div>
+          </div>
+          <div className='data-row'>
+            <div className='data-row-label'>Y:</div>
+            <div id={`${props.id}-gyro-y`} className='data-row-data'> - </div>
+          </div>
+          <div className='data-row'>
+            <div className='data-row-label'>Z:</div>
+            <div id={`${props.id}-gyro-z`} className='data-row-data'> - </div>
           </div>
         </div>
       }
