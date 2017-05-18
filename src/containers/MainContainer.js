@@ -1,7 +1,7 @@
-
 import React, { Component } from 'react'
 import sheetsu from 'sheetsu-node'
 import io from 'socket.io-client'
+import classnames from 'classnames'
 
 // components
 import TagRow from '../components/TagRow'
@@ -81,7 +81,7 @@ class MainContainer extends Component {
         this.addTag(eventData.deviceId)
       } else {
         // update the tag with the payload data
-        // this.updateTag(eventData.deviceId, eventData.eventType, eventData.data, tagIndex)
+        this.updateTag(eventData.deviceId, eventData.eventType, eventData.data, tagIndex)
       }
     })
   }
@@ -94,6 +94,7 @@ class MainContainer extends Component {
     this.dbClient = sheetsu(config)
 
     this.dbClient.read().then((data) => {
+      console.log('connected to Sheetsu')
       this.workerData = JSON.parse(data)
       this.setState({ dbConnected: true })
     }, (err) => {
@@ -112,7 +113,7 @@ class MainContainer extends Component {
 
     this.heartbeats.push({
       id,
-      lastHeard: getCurrTimeString()
+      lastHeard: Date.now()
     })
   }
 
@@ -125,33 +126,34 @@ class MainContainer extends Component {
     // updates that bear the name of the data type, i.e. 'accel'
 
     // update the 'last heard' timestamp so we know if it's active
-    this.heartbeats[tagIndex].lastHeard = Date.now() - this.heartbeats[tagIndex].lastHeard
-    document.getElementById(`${deviceId}-last-heard`).innerHTML = this.heartbeats[tagIndex].lastHeard
-    // !! -- eliminate getCurrSTring() if not using
+    this.heartbeats[tagIndex].lastHeard = Date.now()
+    document.getElementById(`${deviceId}-last-heard-data`).innerHTML = getCurrTimeString()
 
-    if (eventType === 'event') {
-      // only bad_bend exists right now. put logic here in future for other types
-      document.getElementById(`${deviceId}-bad-bend`).innerHTML = data.data.data
-    } else if (eventType === 'orient') {
-      // we expecte <= 30 objects but only need to use 1 for an update
-      for (let key in data.data[0]) {
-        if (key !== 'timestamp') {
-          document.getElementById(`${deviceId}-${key}`).innerHTML = data.data[0][key]
-        }
-      }
-    } else {
-      for (let key in data.data) {
-        document.getElementById(`${deviceId}-${key}`).innerHTML = data.data[key]
-      }
-    }
+    // if (eventType === 'event') {
+    //   // only bad_bend exists right now. put logic here in future for other types
+    //   document.getElementById(`${deviceId}-bad-bend`).innerHTML = data.data.data
+    // } else if (eventType === 'orient') {
+    //   // we expecte <= 30 objects but only need to use 1 for an update
+    //   for (let key in data.data[0]) {
+    //     if (key !== 'timestamp') {
+    //       document.getElementById(`${deviceId}-${key}`).innerHTML = data.data[0][key]
+    //     }
+    //   }
+    // } else {
+    //   for (let key in data.data) {
+    //     document.getElementById(`${deviceId}-${key}`).innerHTML = data.data[key]
+    //   }
+    // }
 
-    // check for name and site in DB if it's not already known
+    // // check for name and site in DB if it's not already known
     const activeTags = this.state.activeTags
     if (activeTags[tagIndex].name === 'unknown' && this.state.dbConnected) {
+      console.log('looking for worker details')
       const worker = this.workerData.find((worker) => {
         return worker.id === deviceId
       })
       if (worker) {
+        console.log('found worker')
         activeTags[tagIndex].name = worker.name
         activeTags[tagIndex].site = worker.site
         this.setState({ activeTags })
@@ -166,13 +168,12 @@ class MainContainer extends Component {
       const diff = Date.now() - new Date(obj.lastHeard).getTime()
 
       if (diff > this.activeThreshold) {
-        // manually switch the class (color)
-        // document.getElementById(`${obj.id}`).classList.add('status-inactive')
+        document.getElementById(`${obj.id}-tag-row`).classList.add('status-inactive')
       } else {
-        // const classList = document.getElementById(`${obj.id}`).classList
-        // if (classList.value.includes('status-inactive')) {
-        //   document.getElementById(`${obj.id}`).classList.remove('status-inactive')
-        // }
+        const classList = document.getElementById(`${obj.id}-tag-row`).classList
+        if (classList.value.includes('status-inactive')) {
+          document.getElementById(`${obj.id}-tag-row`).classList.remove('status-inactive')
+        }
       }
 
       // if the diff is > our threshold (set in constructor)
@@ -260,6 +261,7 @@ class MainContainer extends Component {
             <TagRow
               key={index}
               id={tag.id}
+              name={tag.name}
               site={tag.site}
               toggles={this.state.toggles}
             />

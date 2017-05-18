@@ -8,19 +8,19 @@ import '../styles/TagRow.css'
 
 function TagRow (props) {
   return (
-    <div className='tag-row'>
+    <div id={`${props.id}-tag-row`} className='tag-row'>
       {/* Meta */}
       <div className='meta tag-section'>
         <h4>Meta</h4>
-        <div id={`${props.id}-tagId`} className='tagId'>999999</div>
-        <div id={`${props.id}-name`} className='name'>First Lastname</div>
-        <div id={`${props.id}-site`} className='site'>51 Jay St.</div>
+        <div id={`${props.id}-tagId`} className='tagId'>{props.id}</div>
+        <div id={`${props.id}-name`} className='name'>{props.name}</div>
+        <div id={`${props.id}-site`} className='site'>{props.site}</div>
       </div>
 
-      {/* Time Delta */}
-      <div id='time-delta' className='tag-section'>
-        <h4>∆ Time</h4>
-        <div id='time-delta-data'>99:99</div>
+      {/* Last Heard */}
+      <div className='last-heard tag-section'>
+        <h4>Last Heard</h4>
+        <div id={`${props.id}-last-heard-data`} className='last-heard-data'>99:99</div>
       </div>
 
       {/* Events */}
