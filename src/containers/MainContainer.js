@@ -219,7 +219,7 @@ class MainContainer extends Component {
     toggles[label] = !toggles[label]
     this.setState({ toggles })
 
-    e.target.classList.toggle('toggle-button-off')
+    // e.target.classList.toggle('toggle-button-off')
   }
 
   handleSiteFilterChange (e) {
@@ -282,10 +282,6 @@ class MainContainer extends Component {
       })
     }
 
-    const toggleButtonStyles = classnames({
-
-    })
-
     const tagIdFilterStyles = classnames({
       'filter-button-off': true,
       'filter-button-on': this.state.tagId.length > 0
@@ -325,44 +321,38 @@ class MainContainer extends Component {
             </div>
             <div id='toggle-menu'>
               <div
-                className='toggle-button '
+                className={this.state.toggles.events ? 'toggle-button' : 'toggle-button toggle-button-off'}
                 onClick={(event) => this.handleToggle(event)}
-                data-label='events'
               >
                 Events
               </div>
               <div
-                className='toggle-button'
+                className={this.state.toggles.motions ? 'toggle-button' : 'toggle-button toggle-button-off'}
                 onClick={(event) => this.handleToggle(event)}
-                data-label='events'
               >
                 Motions
               </div>
               <div
-                className='toggle-button'
+                className={this.state.toggles.envhi ? 'toggle-button' : 'toggle-button toggle-button-off'}
                 onClick={(event) => this.handleToggle(event)}
-                data-label='events'
               >
                 EnvHi
               </div>
               <div
-                className='toggle-button'
+                className={this.state.toggles.envlo ? 'toggle-button' : 'toggle-button toggle-button-off'}
                 onClick={(event) => this.handleToggle(event)}
-                data-label='events'
               >
                 EnvLo
               </div>
               <div
-                className='toggle-button'
+                className={this.state.toggles.orientation ? 'toggle-button' : 'toggle-button toggle-button-off'}
                 onClick={(event) => this.handleToggle(event)}
-                data-label='events'
               >
                 Orientation
               </div>
               <div
-                className='toggle-button'
+                className={this.state.toggles.meta ? 'toggle-button' : 'toggle-button toggle-button-off'}
                 onClick={(event) => this.handleToggle(event)}
-                data-label='events'
               >
                 Meta
               </div>
