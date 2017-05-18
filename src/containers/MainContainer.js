@@ -42,6 +42,16 @@ class MainContainer extends Component {
     this.activeThreshold = 10000
     this.heartbeatThreshold = 60000 // check every X ms for tag status
 
+    // see 'updateTag()'
+    this.eventActions = {
+      event: (deviceId, data, tagIndex) => DataEventHandler.handleEventEvent(deviceId, data, tagIndex),
+      orient: (deviceId, data, tagIndex) => DataEventHandler.handleOrientEvent(deviceId, data, tagIndex),
+      magno: (deviceId, data, tagIndex) => DataEventHandler.handleMagnoEvent(deviceId, data, tagIndex),
+      accel: (deviceId, data, tagIndex) => DataEventHandler.handleAccelEvent(deviceId, data, tagIndex),
+      gyro: (deviceId, data, tagIndex) => DataEventHandler.handleGyroEvent(deviceId, data, tagIndex),
+      other: (deviceId, data, tagIndex) => DataEventHandler.handleOtherEvent(deviceId, data, tagIndex)
+    }
+
     this.debug = false
   }
 
@@ -129,50 +139,10 @@ class MainContainer extends Component {
     this.heartbeats[tagIndex].lastHeard = Date.now()
     document.getElementById(`${deviceId}-last-heard-data`).innerHTML = getCurrTimeString()
 
-    console.log('New event - ', eventType)
-
-    const eventActions = {
-      event: (deviceId, data, tagIndex) => DataEventHandler.handleEventEvent(deviceId, data, tagIndex),
-      orient: (deviceId, data, tagIndex) => DataEventHandler.handleOrientEvent(deviceId, data, tagIndex),
-      magno: (deviceId, data, tagIndex) => DataEventHandler.handleMagnoEvent(deviceId, data, tagIndex),
-      accel: (deviceId, data, tagIndex) => DataEventHandler.handleAccelEvent(deviceId, data, tagIndex),
-      gyro: (deviceId, data, tagIndex) => DataEventHandler.handleGyroEvent(deviceId, data, tagIndex)
-    }
-
-    if (eventActions[eventType]) {
-      console.log('calling ', eventActions[eventType])
-      eventActions[eventType]()
+    if (this.eventActions[eventType]) {
+      this.eventActions[eventType](deviceId, data, tagIndex)
     } else {
-      DataEventHandler.handleOtherEvent(deviceId, data, tagIndex)
-    }
-
-    if (eventType === 'event') {
-      // only bad_bend exists right now. put logic here in future for other types
-      // document.getElementById(`${deviceId}-bad-bend`).innerHTML = data.data.data
-    } else if (eventType === 'orient' || eventType === 'magno' || eventType === 'accel' || eventType === 'gyro') {
-      // we expecte <= 30 objects but only need to use 1 for an update
-      // for (let key in data.data[0]) {
-      //   if (key !== 'timestamp') {
-      //     document.getElementById(`${deviceId}-${key}`).innerHTML = data.data[0][key]
-      //   }
-      // }
-    } else {
-      // console.log(data.data)
-      // for (let key in data.data) {
-      //   let datum
-      //   if (data.data[key].indexOf('.') > 0) {
-      //     let splitString = data.data[key].split('.')
-      //     splitString[1] = splitString[1].slice(0, 2)
-      //     datum = splitString.join('.')
-      //   } else {
-      //     datum = data.data[key]
-      //   }
-      //   try {
-      //     document.getElementById(`${deviceId}-${key}`).innerHTML = datum
-      //   } catch (err) {
-      //     console.log(`could not update innerHTML for ${deviceId}-${key}`)
-      //   }
-      // }
+      this.eventActions['other'](deviceId, data, tagIndex)
     }
 
     // // check for name and site in DB if it's not already known
