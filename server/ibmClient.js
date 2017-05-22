@@ -33,12 +33,6 @@ var connectToIBM = function (io) {
       // payload is an array of integers and needs coercing
       var data = JSON.parse(String(payload))
 
-      if (eventType === 'event') {
-        if (data.data.data === 'ON') {
-          // console.log(`event from device#: ${deviceId}`)
-        }
-      }
-
       io.emit('deviceEvent', {
         deviceType,
         deviceId,

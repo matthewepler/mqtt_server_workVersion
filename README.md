@@ -1,6 +1,6 @@
 # IBM MQTT Status Dashboard  
 
 ## TO-DO
-- Event animations
-- events/motions go to single column when crowded
-- filtered workers array (eliminate updates to hidden tag objects)
+- 'packets' data attribute
+- bad bends ON vs OFF
+

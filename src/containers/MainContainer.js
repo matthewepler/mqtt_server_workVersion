@@ -45,7 +45,7 @@ class MainContainer extends Component {
     this.heartbeats = []
     this.heartbeatInterval = null // placeholder for interval timer object
     this.heartbeatTimer = 1000
-    this.activeThreshold = 10000
+    this.activeThreshold = 3000
     this.heartbeatThreshold = 60000 // check every X ms for tag status
 
     // see 'updateTag()'
@@ -147,6 +147,7 @@ class MainContainer extends Component {
     }
 
     if (this.eventActions[eventType]) {
+      if (eventType === 'accel') console.log('accel data: ', data)
       this.eventActions[eventType](deviceId, data, this.state.toggles)
     } else {
       this.eventActions['other'](deviceId, data, this.state.toggles, eventType)

@@ -1,47 +1,22 @@
 const DataEventHandler = {
   handleMotionEvent: (deviceId, data, toggles) => {
     if (toggles['motions']) {
+      // TO-DO handle bad bend flipping state (ON vs OFF)
       try {
-        const element = document.getElementById(`${deviceId}-${data.data.eventType}-pill-count`)
-        element.innerHTML = parseInt(element.innerHTML, 10) + 1
+        pingPill(deviceId, data.data.eventType, 'orange')
       } catch (err) {
         console.log(`exception @ handleMotionEvent: ${deviceId}: ${data.data.eventType}`)
       }
-
-      const pill = document.getElementById(`${deviceId}-${data.data.eventType}-pill`)
-      pill.classList.add('ping-border-blue')
-      pill.addEventListener('animationend', function () {
-        pill.classList.remove('ping-border-blue')
-      })
-
-      const pillLabel = document.getElementById(`${deviceId}-${data.data.eventType}-pill-left`)
-      pillLabel.classList.add('ping-background-blue')
-      pillLabel.addEventListener('animationend', function () {
-        pillLabel.classList.remove('ping-background-blue')
-      })
     }
   },
 
   handleEventEvent: (deviceId, data, toggles) => {
     if (toggles['events']) {
       try {
-        const element = document.getElementById(`${deviceId}-${data.data.eventType}-pill-count`)
-        element.innerHTML = parseInt(element.innerHTML, 10) + 1
+        pingPill(deviceId, data.data.eventType, 'blue')
       } catch (err) {
         console.log(`exception @ handleEventEvent: ${deviceId}: ${data.data.eventType}`)
       }
-
-      const pill = document.getElementById(`${deviceId}-${data.data.eventType}-pill`)
-      pill.classList.add('ping-border-orange')
-      pill.addEventListener('animationend', function () {
-        pill.classList.remove('ping-border-orange')
-      })
-
-      const pillLabel = document.getElementById(`${deviceId}-${data.data.eventType}-pill-left`)
-      pillLabel.classList.add('ping-background-orange')
-      pillLabel.addEventListener('animationend', function () {
-        pillLabel.classList.remove('ping-background-orange')
-      })
     }
   },
 
@@ -66,6 +41,7 @@ const DataEventHandler = {
   },
 
   handleAccelEvent: (deviceId, data, toggles) => {
+    console.log(data.data)
     if (toggles['accel']) {
       if (!data.data) {
         console.log('data for accel event is invalid')
@@ -92,6 +68,23 @@ const DataEventHandler = {
       }
     }
   }
+}
+
+function pingPill (deviceId, eventType, color) {
+  const element = document.getElementById(`${deviceId}-${eventType}-pill-count`)
+  element.innerHTML = parseInt(element.innerHTML, 10) + 1
+
+  const pill = document.getElementById(`${deviceId}-${eventType}-pill`)
+  pill.classList.add(`ping-border-${color}`)
+  pill.addEventListener('animationend', function () {
+    pill.classList.remove(`ping-border-${color}`)
+  })
+
+  const pillLabel = document.getElementById(`${deviceId}-${eventType}-pill-left`)
+  pillLabel.classList.add(`ping-background-${color}`)
+  pillLabel.addEventListener('animationend', function () {
+    pillLabel.classList.remove(`ping-background-${color}`)
+  })
 }
 
 function typicalAxialEvent (deviceId, data, typeString) {
