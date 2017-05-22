@@ -23,14 +23,14 @@ class MainContainer extends Component {
       dbConnected: false,
       site: 'all sites',
       toggles: {
-        events: false,
-        motions: false,
+        events: true,
+        motions: true,
         envhi: false,
         envlo: false,
         orientation: false,
         accel: false,
-        magno: false,
         gyro: false,
+        magno: false,
         meta: false
       },
       tagId: ''
@@ -50,12 +50,13 @@ class MainContainer extends Component {
 
     // see 'updateTag()'
     this.eventActions = {
-      event: (deviceId, data) => DataEventHandler.handleEventEvent(deviceId, data),
-      orient: (deviceId, data) => DataEventHandler.handleOrientEvent(deviceId, data),
-      accel: (deviceId, data) => DataEventHandler.handleAccelEvent(deviceId, data),
-      gyro: (deviceId, data) => DataEventHandler.handleGyroEvent(deviceId, data),
-      magno: (deviceId, data) => DataEventHandler.handleMagnoEvent(deviceId, data),
-      other: (deviceId, data) => DataEventHandler.handleOtherEvent(deviceId, data)
+      motion: (deviceId, data, toggles) => DataEventHandler.handleMotionEvent(deviceId, data, toggles),
+      event: (deviceId, data, toggles) => DataEventHandler.handleEventEvent(deviceId, data, toggles),
+      orient: (deviceId, data, toggles) => DataEventHandler.handleOrientEvent(deviceId, data, toggles),
+      accel: (deviceId, data, toggles) => DataEventHandler.handleAccelEvent(deviceId, data, toggles),
+      gyro: (deviceId, data, toggles) => DataEventHandler.handleGyroEvent(deviceId, data, toggles),
+      magno: (deviceId, data, toggles) => DataEventHandler.handleMagnoEvent(deviceId, data, toggles),
+      other: (deviceId, data, toggles, eventType) => DataEventHandler.handleOtherEvent(deviceId, data, toggles, eventType)
     }
 
     this.debug = false
@@ -81,11 +82,7 @@ class MainContainer extends Component {
     })
 
     socket.on('deviceEvent', (eventData) => {
-      // console.log(eventData);
-
-      if (eventData.eventType === 'event' && eventData.data.data.data === 'ON') {
-        // console.log(`event from device#: ${eventData.deviceId}`)
-      }
+      // console.log(eventData)
 
       // check to see if this tag is already in the list of active tags
       const tagIndex = this.heartbeats.findIndex((obj) => {
@@ -150,9 +147,9 @@ class MainContainer extends Component {
     }
 
     if (this.eventActions[eventType]) {
-      this.eventActions[eventType](deviceId, data, tagIndex)
+      this.eventActions[eventType](deviceId, data, this.state.toggles)
     } else {
-      this.eventActions['other'](deviceId, data, tagIndex)
+      this.eventActions['other'](deviceId, data, this.state.toggles, eventType)
     }
 
     // // check for name and site in DB if it's not already known

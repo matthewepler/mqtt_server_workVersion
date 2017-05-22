@@ -13,7 +13,10 @@ h4 {
   justify-content: flex-start;
   padding-top: 25px;
   padding-bottom: 25px;
-  max-width: 100%;
+
+  .envHi, .envLo, .orientation, .meta, .accel, .magno, .gyro {
+    width: 100px;
+  }
 }
 
 .tag-section {
@@ -46,8 +49,7 @@ h4 {
 }
 
 .events-wrapper, .motions-wrapper {
-  flex-basis: 100px;
-  flex-grow: 1;
+  min-width: 300px;
   max-width: 300px;
 
   .events, .motions {

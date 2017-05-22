@@ -1,6 +1,7 @@
 var app = require('./app')
 var server = require('http').Server(app)
 var connectToIBM = require('./ibmClient')
+var connectToDummyBroker = require('./dummyBroker')
 require('dotenv').config()
 
 var PORT = process.env.PORT || 5000
@@ -18,4 +19,6 @@ io.on('connection', function (socket) {
 
 if (process.env.NODE_ENV === 'production') {
   connectToIBM(io)
+} else if (process.env.NODE_ENV === 'development') {
+  connectToDummyBroker(io)
 }

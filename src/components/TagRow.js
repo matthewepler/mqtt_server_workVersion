@@ -49,16 +49,16 @@ function TagRow (props) {
         <div className='events-wrapper tag-section'>
           <h4>Events</h4>
           <div className='events'>
-            <Pill id={`${props.id}-fall`} label={'Fall'} data={'999'} />
-            <Pill id={`${props.id}-struck-by`} label={'Struck By'} data={'999'} />
-            <Pill id={`${props.id}-button-press-safety`} label={'(!) Safety'} data={'999'} />
-            <Pill id={`${props.id}-button-press-emergency`} label={'(!) Emer.'} data={'999'} />
-            <Pill id={`${props.id}-noise`} label={'Noise'} data={'999'} />
-            <Pill id={`${props.id}-vibration`} label={'Vibration'} data={'999'} />
-            <Pill id={`${props.id}-motion`} label={'Motion'} data={'999'} />
-            <Pill id={`${props.id}-heat`} label={'Heat'} data={'999'} />
-            <Pill id={`${props.id}-cold`} label={'Cold'} data={'999'} />
-            <Pill id={`${props.id}-gait`} label={'Gait'} data={'999'} />
+            <Pill id={props.id} eventType={'fall'} label={'Fall'} data={'0'} />
+            <Pill id={props.id} eventType={'struck-by'} label={'Struck By'} data={'0'} />
+            <Pill id={props.id} eventType={'button-press-safety'} label={'(!) Safety'} data={'0'} />
+            <Pill id={props.id} eventType={'button-press-emergency'} label={'(!) Emer.'} data={'0'} />
+            <Pill id={props.id} eventType={'noise'} label={'Noise'} data={'0'} />
+            <Pill id={props.id} eventType={'vibration'} label={'Vibration'} data={'0'} />
+            <Pill id={props.id} eventType={'motion'} label={'Motion'} data={'0'} />
+            <Pill id={props.id} eventType={'heat'} label={'Heat'} data={'0'} />
+            <Pill id={props.id} eventType={'cold'} label={'Cold'} data={'0'} />
+            <Pill id={props.id} eventType={'gait'} label={'Gait'} data={'0'} />
           </div>
         </div>
       }
@@ -68,14 +68,14 @@ function TagRow (props) {
         <div className='motions-wrapper tag-section'>
           <h4>Motions</h4>
           <div className='motions'>
-            <Pill id={`${props.id}-bad-bends`} label={'Bad Bends'} data={'999'} />
-            <Pill id={`${props.id}-steps`} label={'Steps'} data={'99999'} />
-            <Pill id={`${props.id}-trips`} label={'Trips'} data={'999'} />
-            <Pill id={`${props.id}-slips`} label={'Slips'} data={'999'} />
-            <Pill id={`${props.id}-squats`} label={'Squats'} data={'999'} />
-            <Pill id={`${props.id}-twists`} label={'Twists'} data={'999'} />
-            <Pill id={`${props.id}-reaches`} label={'Reaches'} data={'999'} />
-            <Pill id={`${props.id}-jumps`} label={'Jumps'} data={'999'} />
+            <Pill id={props.id} eventType={'bad_bend'} label={'Bad Bends'} data={'0'} />
+            <Pill id={props.id} eventType={'step'} label={'Steps'} data={'0'} />
+            <Pill id={props.id} eventType={'trip'} label={'Trips'} data={'0'} />
+            <Pill id={props.id} eventType={'slip'} label={'Slips'} data={'0'} />
+            <Pill id={props.id} eventType={'squat'} label={'Squats'} data={'0'} />
+            <Pill id={props.id} eventType={'twist'} label={'Twists'} data={'0'} />
+            <Pill id={props.id} eventType={'reach'} label={'Reaches'} data={'0'} />
+            <Pill id={props.id} eventType={'jump'} label={'Jumps'} data={'0'} />
           </div>
         </div>
       }

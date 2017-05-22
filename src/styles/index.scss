@@ -2,12 +2,12 @@
 
 .main-container {
   overflow-x: auto;
-  padding: 20px;
 
   .nav-bar {
     align-items: center;
     justify-content: space-between;
     display: flex;
+    padding: 20px 20px 0 20px;
 
     img {
       color: black;
@@ -40,6 +40,14 @@
   margin-right: 0.5rem;
   padding: 8px;
   text-align: center;
+}
+
+#device-list {
+  padding-left: 20px;
+
+  & > div:hover{
+    // border: 1px solid black;
+  }
 }
 
 #filter-toggle-menu {

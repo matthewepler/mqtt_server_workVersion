@@ -1,8 +1,8 @@
 $lightgrey: #F2F2F2;
 $darkgrey: #4B4B4B;
 $xtra-darkgrey: #252525;
-$connected: #00FF7F;
-$error: #FF6347;
+$orange: #FF6900;
+$blue: #6D9FFF;
 
 $mobile: 500px;
 
@@ -13,6 +13,7 @@ html {
 
 body {
   background: white;
+  box-sizing: border-box;
   font-family: sans-serif;
   font-size: 1.2rem;
   margin: 0;
