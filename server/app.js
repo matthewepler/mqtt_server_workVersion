@@ -77,6 +77,11 @@ app.get('/dashboard', stormpath.authenticationRequired, (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'))
 })
 
+// use this simplified route when testing with 'heroku local web'
+// app.get('/', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'))
+// })
+
 app.use(express.static(path.resolve(__dirname, '..', 'build')))
 
 module.exports = app

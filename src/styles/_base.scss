@@ -1,8 +1,10 @@
-$lightgrey: #D3D3D3;
+$lightgrey: #F2F2F2;
 $darkgrey: #4B4B4B;
 $xtra-darkgrey: #252525;
 $connected: #00FF7F;
 $error: #FF6347;
+
+$mobile: 500px;
 
 html {
   // 1 rem = 10pt;
@@ -17,3 +19,10 @@ body {
   padding: 0;
 }
 
+@mixin forLargeScreens($media) {
+  @media (min-width: $media/16+em) { @content; }
+}
+
+@mixin forSmallScreens($media) {
+    @media (max-width: $media) { @content; }
+}

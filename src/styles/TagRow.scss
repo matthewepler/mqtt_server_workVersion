@@ -21,7 +21,7 @@ h4 {
 }
 
 .info {
-  max-width: 100px;
+  flex-basis: 160px;
 
   & div  { 
     margin-bottom: 10px; 
@@ -36,6 +36,8 @@ h4 {
     font-size: 0.9rem;
     padding: 5px;
     max-width: 100%;
+    text-align: center;
+    width: 75px;
   }
 }
 
@@ -93,11 +95,30 @@ h4 {
 .single-row {
   display: flex;
   max-width: 500px;
+  @include forSmallScreens($mobile) {
+    background: pink;
+    display: block;
+  }
 
   & div {
     margin-right: 25px;
     max-width: 150px;
   }
+
+  .tagId { 
+    order: 1;
+  }
+  .site { 
+    order: 2;
+    height: 1.55rem;
+    text-align: center;
+    width: 75px;
+  }
+  .name { 
+    order: 3;
+    width: 125px;
+  }
+
 }
 
 .expand-max-width {

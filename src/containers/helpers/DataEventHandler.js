@@ -4,18 +4,34 @@ const DataEventHandler = {
   },
 
   handleOrientEvent: (deviceId, data) => {
+    if (!data.data) {
+      console.log('data for orient event is invalid')
+      return
+    }
     typicalAxialEvent(deviceId, data.data[0], 'orient')
   },
 
   handleMagnoEvent: (deviceId, data) => {
+    if (!data.data) {
+      console.log('data for magno event is invalid')
+      return
+    }
     typicalAxialEvent(deviceId, data.data[0], 'magno')
   },
 
   handleAccelEvent: (deviceId, data) => {
+    if (!data.data) {
+      console.log('data for accel event is invalid')
+      return
+    }
     typicalAxialEvent(deviceId, data.data[0], 'accel')
   },
 
   handleGyroEvent: (deviceId, data) => {
+    if (!data.data) {
+      console.log('data for gyro event is invalid')
+      return
+    }
     typicalAxialEvent(deviceId, data.data[0], 'gyro')
   },
 
