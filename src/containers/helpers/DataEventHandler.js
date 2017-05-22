@@ -1,6 +1,10 @@
 const DataEventHandler = {
   handleEventEvent: (deviceId, data) => {
-    // console.log('handling Event event')
+    console.log('handling Event event', deviceId)
+    console.log(data)
+
+    // animate matching Pill component
+    // increase count of event by 1
   },
 
   handleOrientEvent: (deviceId, data) => {
