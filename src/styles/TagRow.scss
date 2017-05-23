@@ -61,7 +61,7 @@ h4 {
 .data-row {
   display: flex;
   margin-bottom: 5px; 
-  width: 80px;
+  width: 100px;
 
   .data-row-label {
     font-weight: 600;
@@ -75,11 +75,11 @@ h4 {
 }
 
 .envHi .data-row-label {
-  width: 75px;
+  width: 85px;
 }
 
 .envLo .data-row-label {
-  width: 65px;
+  width: 80px;
 }
 
 .meta .data-row-label {
