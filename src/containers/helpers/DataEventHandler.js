@@ -1,9 +1,12 @@
 const DataEventHandler = {
   handleMotionEvent: (deviceId, data, toggles) => {
     if (toggles['motions']) {
-      // TO-DO handle bad bend flipping state (ON vs OFF)
       try {
-        pingPill(deviceId, data.data.eventType, 'orange')
+        // TO-DO add conditions for other types of motions
+        // bad bends have 'ON' and 'OFF'
+        if (data.data.data && data.data.data === 'ON') {
+          pingPill(deviceId, data.data.eventType, 'orange')
+        }
       } catch (err) {
         console.log(`exception @ handleMotionEvent: ${deviceId}: ${data.data.eventType}`)
       }

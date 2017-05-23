@@ -11,11 +11,10 @@ h4 {
   border-top: solid 1px $lightgrey;
   display: flex;
   justify-content: flex-start;
-  padding-top: 25px;
-  padding-bottom: 25px;
+  padding: 25px 25px 25px 0;
 
   .envHi, .envLo, .orientation, .meta, .accel, .magno, .gyro {
-    width: 100px;
+    // width: 120px; // see .data-row
   }
 }
 
@@ -62,6 +61,7 @@ h4 {
 .data-row {
   display: flex;
   margin-bottom: 5px; 
+  width: 80px;
 
   .data-row-label {
     font-weight: 600;
