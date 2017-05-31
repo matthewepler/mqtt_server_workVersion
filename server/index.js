@@ -1,17 +1,20 @@
-var app = require('./app')
-var server = require('http').Server(app)
-var connectToIBM = require('./ibmClient')
-var connectToDummyBroker = require('./dummyBroker')
-require('dotenv').config()
+import app from './app'
+import http from 'http'
+import connectToIBM from './ibmClient'
+import connectToDummyBroker from './dummyBroker'
+import dotenv from 'dotenv'
+import IO from 'socket.io'
 
-var PORT = process.env.PORT || 5000
+dotenv.config()
+const server = http.Server(app)
+const PORT = process.env.PORT || 5000
 
 server.listen(PORT, () => {
   console.log(`App listening on port ${PORT}!`)
 })
 
 // SOCKET STUFF
-var io = require('socket.io')(server)
+const io = IO(server)
 
 io.on('connection', function (socket) {
   console.log('server has io connection, yo!')
